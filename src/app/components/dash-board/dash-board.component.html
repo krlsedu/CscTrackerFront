@@ -1,0 +1,22 @@
+
+<div style="display: block">
+  <canvas baseChart
+          [data]="getData('category')"
+          [labels]="getLabels('category')"
+          [chartType]="'pie'"
+          [colors]="barChartColors"></canvas>
+</div>
+<div style="display: block">
+  <canvas baseChart
+          [data]="getData('language')"
+          [labels]="getLabels('language')"
+          [chartType]="'pie'"
+          [colors]="barChartColors"></canvas>
+</div>
+<div style="display: block">
+  <canvas baseChart
+          [data]="getData('osName')"
+          [labels]="getLabels('osName')"
+          [chartType]="'pie'"
+          [colors]="barChartColors"></canvas>
+</div>
