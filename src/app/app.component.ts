@@ -9,8 +9,10 @@ import {LoginService} from "./service/login.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'CscTrackerFront';
+  title = 'CscTracker';
   public login: boolean = false;
+
+  private urlLogin = 'https://accounts.google.com/o/oauth2/auth?approval_prompt=force&scope=email&client_id=92132449986-f85cvq6rmtl8u7g24on48g562p98db8p.apps.googleusercontent.com&redirect_uri=https://csctracker.com&response_type=code&access_type=offline';
 
   constructor(@Inject(DOCUMENT) private document: Document,
               public activatedRoute: ActivatedRoute,
@@ -35,6 +37,6 @@ export class AppComponent {
 
   public doLogin() {
     this.login = false;
-    this.document.location.href = 'https://accounts.google.com/o/oauth2/auth?approval_prompt=force&scope=email&client_id=92132449986-f85cvq6rmtl8u7g24on48g562p98db8p.apps.googleusercontent.com&redirect_uri=https://csctracker.com&response_type=code&access_type=offline';
+    this.document.location.href = this.urlLogin;
   }
 }
