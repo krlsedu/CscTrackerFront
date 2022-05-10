@@ -10,7 +10,7 @@ import {DataHandler} from "../Utils/dataHandler";
 })
 export class HeartbeatService {
   // Base url
-  baseurl = 'http://localhost:8089';
+  baseurl = 'https://backend.csctracker.com';
   token = localStorage.getItem('token');
   private dataArray: Heartbeat[] = [];
   private _dateGroup: DataHandler | undefined;

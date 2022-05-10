@@ -8,8 +8,8 @@ import {UserDTO} from "../shared/userDTO";
   providedIn: 'root'
 })
 export class LoginService {
-  redirectUri = 'http://localhost:4200';
-  authServer = 'http://localhost:8899/oauth';
+  redirectUri = 'https://csctracker.com';
+  authServer = 'https://auth.csctracker.com/oauth';
 
   constructor(private http: HttpClient) {
   }

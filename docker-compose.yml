@@ -1,0 +1,16 @@
+version: '3'
+
+networks:
+  backend:
+    external: true
+
+services:
+  csctracker:
+    container_name: frontend
+    hostname: frontend
+    image: krlsedu/csctracker-frontend
+    restart: always
+    ports:
+      - "4200:80"
+    networks:
+      - backend
