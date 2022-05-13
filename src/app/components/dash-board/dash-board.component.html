@@ -1,4 +1,17 @@
-
+<div id="chart">
+  <apx-chart
+    [series]="getSeries('osName')"
+    [chart]="chart"
+    [plotOptions]="plotOptions"
+    [xaxis]="xaxis"></apx-chart>
+</div>
+<div>
+  <apx-chart
+    [series]="getSeries('hostName')"
+    [chart]="chart"
+    [plotOptions]="plotOptions"
+    [xaxis]="xaxis"></apx-chart>
+</div>
 <div style="display: block">
   <canvas baseChart
           [data]="getData('category')"
@@ -17,6 +30,13 @@
   <canvas baseChart
           [data]="getData('osName')"
           [labels]="getLabels('osName')"
+          [chartType]="'pie'"
+          [colors]="barChartColors"></canvas>
+</div>
+<div style="display: block">
+  <canvas baseChart
+          [data]="getData('applicationName')"
+          [labels]="getLabels('applicationName')"
           [chartType]="'pie'"
           [colors]="barChartColors"></canvas>
 </div>

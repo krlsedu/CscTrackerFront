@@ -16,6 +16,9 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {HeartbeatService} from './service/heartbeat.service';
 
+import {NgApexchartsModule} from "ng-apexcharts";
+import {GanttComponent} from './components/gantt/gantt.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,13 +28,15 @@ import {HeartbeatService} from './service/heartbeat.service';
     DashBoardComponent,
     RadarChartComponent,
     DoughnutChartComponent,
-    ListHeartbeatsComponent
+    ListHeartbeatsComponent,
+    GanttComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ChartsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgApexchartsModule
   ],
   providers: [HeartbeatService],
   bootstrap: [AppComponent]

@@ -4,6 +4,9 @@ import {DataHandler} from "../../Utils/dataHandler";
 import {Colors} from "@rinminase/ng-charts";
 import {DataConverter} from "../../Utils/dataConverter";
 
+
+import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexXAxis} from "ng-apexcharts";
+
 @Component({
   selector: 'app-dash-board',
   templateUrl: './dash-board.component.html',
@@ -18,6 +21,43 @@ export class DashBoardComponent implements OnInit {
   public barChartColors: Colors[] = [
     {backgroundColor: ['blue', 'green', 'red', 'orange', 'yellow', 'purple', 'grey', 'brown', 'pink', 'cyan', 'magenta']}
   ];
+
+  series: ApexAxisChartSeries = [
+    {
+      data: [
+
+      ]
+    }
+  ];
+  chart: ApexChart = {
+    height: 350,
+    type: "rangeBar"
+  }
+  chartPie: ApexChart = {
+    height: 350,
+    type: "pie"
+  }
+  responsive = [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          position: "bottom"
+        }
+      }
+    }
+  ]
+  plotOptions: ApexPlotOptions = {
+    bar: {
+      horizontal: true
+    }
+  }
+  xaxis: ApexXAxis = {
+    type: "datetime"
+  }
+
 
   constructor(public heartbeatService: HeartbeatService) {
     this.heartbeatService.getData().subscribe(data => {
@@ -49,6 +89,14 @@ export class DashBoardComponent implements OnInit {
   }
 
   add() {
+  }
+
+  getSeries(key: string): ApexAxisChartSeries {
+    if (this._dateGroup !== undefined) {
+      return this._dateGroup.series(key) ;
+    } else {
+      return this.series;
+    }
   }
 
   getLabels(type: string): string[] {
