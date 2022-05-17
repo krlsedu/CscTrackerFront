@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 
-import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexXAxis} from "ng-apexcharts";
+import {ApexChart, ApexPlotOptions, ApexXAxis} from "ng-apexcharts";
 
 @Component({
   selector: 'app-gantt',
@@ -9,29 +9,12 @@ import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexXAxis} from "ng-ape
 })
 export class GanttComponent {
   // @ViewChild("chart") chart: ChartComponent | undefined;
-  series: ApexAxisChartSeries = [
-    {
-      data: [
-        {
-          x: "Code",
-          y: [
-            1652400004283,
-            1652400014283
-          ]
-        },
-        {
-          x: "Code",
-          y: [
-            1652500004283,
-            1652501014283
-          ]
-        }
-      ]
-    }
-  ];
+  labels: string[] = ["Team A", "Team B", "Team C", "Team D", "Team E"];
+
+  series: number[]= [44, 55, 13, 43, 22];
   chart: ApexChart = {
     height: 350,
-    type: "rangeBar"
+    type: "pie"
   }
   plotOptions: ApexPlotOptions = {
     bar: {

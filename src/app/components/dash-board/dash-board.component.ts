@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HeartbeatService} from "../../service/heartbeat.service";
 import {DataHandler} from "../../Utils/dataHandler";
-import {Colors} from "@rinminase/ng-charts";
 import {DataConverter} from "../../Utils/dataConverter";
 
 
@@ -18,42 +17,42 @@ export class DashBoardComponent implements OnInit {
 
   public chartLabels: Map<string, string[]> = new Map<string, string[]>();
   public chartData: Map<string, number[]> = new Map<string, number[]>();
-  public barChartColors: Colors[] = [
-    {backgroundColor: ['blue', 'green', 'red', 'orange', 'yellow', 'purple', 'grey', 'brown', 'pink', 'cyan', 'magenta']}
-  ];
 
   series: ApexAxisChartSeries = [
     {
-      data: [
-
-      ]
+      data: []
     }
   ];
+
+  pieSeries: number[] = [];
+  pieLabels: string[] = [];
+
   chart: ApexChart = {
     height: 350,
     type: "rangeBar"
-  }
+  };
   chartPie: ApexChart = {
-    height: 350,
+    height: 500,
     type: "pie"
   }
   responsive = [{
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200
-        },
-        legend: {
-          position: "bottom"
-        }
+    breakpoint: 480,
+    options: {
+      chart: {
+        width: 200
+      },
+      legend: {
+        position: "bottom"
       }
     }
-  ]
+  }];
+
   plotOptions: ApexPlotOptions = {
     bar: {
       horizontal: true
     }
   }
+
   xaxis: ApexXAxis = {
     type: "datetime"
   }
@@ -93,7 +92,7 @@ export class DashBoardComponent implements OnInit {
 
   getSeries(key: string): ApexAxisChartSeries {
     if (this._dateGroup !== undefined) {
-      return this._dateGroup.series(key) ;
+      return this._dateGroup.series(key);
     } else {
       return this.series;
     }
@@ -102,7 +101,7 @@ export class DashBoardComponent implements OnInit {
   getLabels(type: string): string[] {
     let strings = this.chartLabels.get(type);
     if (strings === undefined) {
-      return ['Nenhum'];
+      return this.pieLabels;
     }
     return strings;
   }
@@ -112,12 +111,11 @@ export class DashBoardComponent implements OnInit {
     if (numbers === undefined) {
       if (this._dateGroup !== undefined) {
         this.setData(this._dateGroup, type);
-        numbers = this.chartData.get(type);
-      } else {
-        return [];
+        return this.getData(type);
       }
+      return this.pieSeries;
     }
-    return numbers === undefined ? [] : numbers;
+    return numbers;
   }
 
 }

@@ -1,10 +1,4 @@
-<div id="chart">
-  <apx-chart
-    [series]="getSeries('osName')"
-    [chart]="chart"
-    [plotOptions]="plotOptions"
-    [xaxis]="xaxis"></apx-chart>
-</div>
+
 <div>
   <apx-chart
     [series]="getSeries('hostName')"
@@ -12,31 +6,35 @@
     [plotOptions]="plotOptions"
     [xaxis]="xaxis"></apx-chart>
 </div>
-<div style="display: block">
-  <canvas baseChart
-          [data]="getData('category')"
-          [labels]="getLabels('category')"
-          [chartType]="'pie'"
-          [colors]="barChartColors"></canvas>
+
+<div>
+  <apx-chart
+    [series]="getData('hostName')"
+    [chart]="chartPie"
+    [labels]="getLabels('hostName')"
+    [responsive]="responsive"></apx-chart>
 </div>
-<div style="display: block">
-  <canvas baseChart
-          [data]="getData('language')"
-          [labels]="getLabels('language')"
-          [chartType]="'pie'"
-          [colors]="barChartColors"></canvas>
+
+<div>
+  <apx-chart
+    [series]="getData('category')"
+    [chart]="chartPie"
+    [labels]="getLabels('category')"
+    [responsive]="responsive"></apx-chart>
 </div>
-<div style="display: block">
-  <canvas baseChart
-          [data]="getData('osName')"
-          [labels]="getLabels('osName')"
-          [chartType]="'pie'"
-          [colors]="barChartColors"></canvas>
+
+<div>
+  <apx-chart
+    [series]="getData('language')"
+    [chart]="chartPie"
+    [labels]="getLabels('language')"
+    [responsive]="responsive"></apx-chart>
 </div>
-<div style="display: block">
-  <canvas baseChart
-          [data]="getData('applicationName')"
-          [labels]="getLabels('applicationName')"
-          [chartType]="'pie'"
-          [colors]="barChartColors"></canvas>
+
+<div>
+  <apx-chart
+    [series]="getData('applicationName')"
+    [chart]="chartPie"
+    [labels]="getLabels('applicationName')"
+    [responsive]="responsive"></apx-chart>
 </div>
