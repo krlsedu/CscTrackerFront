@@ -4,7 +4,8 @@ import {DataHandler} from "../../Utils/dataHandler";
 import {DataConverter} from "../../Utils/dataConverter";
 
 
-import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexXAxis} from "ng-apexcharts";
+import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexTheme, ApexXAxis} from "ng-apexcharts";
+import {ApexTitleSubtitle} from "ng-apexcharts/lib/model/apex-types";
 
 @Component({
   selector: 'app-dash-board',
@@ -17,6 +18,7 @@ export class DashBoardComponent implements OnInit {
 
   public chartLabels: Map<string, string[]> = new Map<string, string[]>();
   public chartData: Map<string, number[]> = new Map<string, number[]>();
+  public chartTitle: Map<string, ApexTitleSubtitle> = new Map<string, ApexTitleSubtitle>();
 
   series: ApexAxisChartSeries = [
     {
@@ -26,13 +28,20 @@ export class DashBoardComponent implements OnInit {
 
   pieSeries: number[] = [];
   pieLabels: string[] = [];
+  pieChartTitle: ApexTitleSubtitle = {
+    text: 'test',
+    align: 'center'
+  }
+
+  chartTheme: ApexTheme = {
+    mode: 'light'
+  }
 
   chart: ApexChart = {
     height: 350,
     type: "rangeBar"
   };
   chartPie: ApexChart = {
-    height: 500,
     type: "pie"
   }
   responsive = [{
@@ -67,6 +76,7 @@ export class DashBoardComponent implements OnInit {
   public refresh() {
     this.chartData = new Map<string, number[]>();
     this.chartLabels = new Map<string, string[]>();
+    this.chartTitle = new Map<string, ApexTitleSubtitle>();
     this.heartbeatService.getData().subscribe(data => {
       this._dateGroup = data;
     });
@@ -76,9 +86,17 @@ export class DashBoardComponent implements OnInit {
     let dataSet = data.getDataSet(type, "timeSpentMillis");
     this.chartLabels.set(type, []);
     this.chartData.set(type, []);
+    this.chartTitle.set(type, {
+      text: type,
+      align: 'center'
+    });
     for (let dataSetItem of dataSet) {
+      let label = dataSetItem.label;
+      if (label === "null") {
+        label = "Default";
+      }
       // @ts-ignore
-      this.chartLabels.get(type).push(dataSetItem.label + " (" + DataConverter.format(dataSetItem.value) + ")");
+      this.chartLabels.get(type).push(label + " (" + DataConverter.format(dataSetItem.value) + ")");
       // @ts-ignore
       this.chartData.get(type).push(dataSetItem.value);
     }
@@ -116,6 +134,14 @@ export class DashBoardComponent implements OnInit {
       return this.pieSeries;
     }
     return numbers;
+  }
+
+  getTitle(type: string): ApexTitleSubtitle {
+    let title = this.chartTitle.get(type);
+    if (title === undefined) {
+      return this.pieChartTitle;
+    }
+    return title;
   }
 
 }

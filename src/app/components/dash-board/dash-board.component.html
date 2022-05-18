@@ -1,40 +1,85 @@
+<div class="container">
 
-<div>
-  <apx-chart
-    [series]="getSeries('hostName')"
-    [chart]="chart"
-    [plotOptions]="plotOptions"
-    [xaxis]="xaxis"></apx-chart>
-</div>
+  <div class="container">
+    <div class="row d-flex justify-content-around align-items-center">
+      <apx-chart
+        [title]="getTitle('hostName')"
+        [theme]="chartTheme"
+        [series]="getSeries('hostName')"
+        [chart]="chart"
+        [plotOptions]="plotOptions"
+        [xaxis]="xaxis"></apx-chart>
+    </div>
+    <div class="row d-flex justify-content-around align-items-center">
+      <div class="col-sm">
+        <apx-chart
+          [title]="getTitle('applicationName')"
+          [theme]="chartTheme"
+          [series]="getData('applicationName')"
+          [chart]="chartPie"
+          [labels]="getLabels('applicationName')"
+          [responsive]="responsive"></apx-chart>
+      </div>
 
-<div>
-  <apx-chart
-    [series]="getData('hostName')"
-    [chart]="chartPie"
-    [labels]="getLabels('hostName')"
-    [responsive]="responsive"></apx-chart>
-</div>
+      <div class="col-sm">
+        <apx-chart
+          [title]="getTitle('project')"
+          [theme]="chartTheme"
+          [series]="getData('project')"
+          [chart]="chartPie"
+          [labels]="getLabels('project')"
+          [responsive]="responsive"></apx-chart>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-around align-items-center">
+      <div class="col-sm">
+        <apx-chart
+          [title]="getTitle('language')"
+          [theme]="chartTheme"
+          [series]="getData('language')"
+          [chart]="chartPie"
+          [labels]="getLabels('language')"
+          [responsive]="responsive"></apx-chart>
+      </div>
 
-<div>
-  <apx-chart
-    [series]="getData('category')"
-    [chart]="chartPie"
-    [labels]="getLabels('category')"
-    [responsive]="responsive"></apx-chart>
-</div>
+      <div class="col-sm">
+        <apx-chart
+          [title]="getTitle('category')"
+          [theme]="chartTheme"
+          [series]="getData('category')"
+          [chart]="chartPie"
+          [labels]="getLabels('category')"
+          [responsive]="responsive"></apx-chart>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-around align-items-center">
+      <div class="col-sm">
+        <apx-chart
+          [title]="getTitle('osName')"
+          [theme]="chartTheme"
+          [series]="getData('osName')"
+          [chart]="chartPie"
+          [labels]="getLabels('osName')"
+          [responsive]="responsive"></apx-chart>
+      </div>
 
-<div>
-  <apx-chart
-    [series]="getData('language')"
-    [chart]="chartPie"
-    [labels]="getLabels('language')"
-    [responsive]="responsive"></apx-chart>
-</div>
-
-<div>
-  <apx-chart
-    [series]="getData('applicationName')"
-    [chart]="chartPie"
-    [labels]="getLabels('applicationName')"
-    [responsive]="responsive"></apx-chart>
-</div>
+      <div class="col-sm">
+        <apx-chart
+          [title]="getTitle('hostName')"
+          [theme]="chartTheme"
+          [series]="getData('hostName')"
+          [chart]="chartPie"
+          [labels]="getLabels('hostName')"
+          [responsive]="responsive"></apx-chart>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-around align-items-center">
+      <apx-chart
+        [title]="getTitle('applicationName')"
+        [theme]="chartTheme"
+        [series]="getSeries('applicationName')"
+        [chart]="chart"
+        [plotOptions]="plotOptions"
+        [xaxis]="xaxis"></apx-chart>
+    </div>
+  </div>
