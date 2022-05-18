@@ -6,6 +6,7 @@ import {DataConverter} from "../../Utils/dataConverter";
 
 import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexTheme, ApexXAxis} from "ng-apexcharts";
 import {ApexTitleSubtitle} from "ng-apexcharts/lib/model/apex-types";
+import {map, timer} from "rxjs";
 
 @Component({
   selector: 'app-dash-board',
@@ -19,6 +20,7 @@ export class DashBoardComponent implements OnInit {
   public chartLabels: Map<string, string[]> = new Map<string, string[]>();
   public chartData: Map<string, number[]> = new Map<string, number[]>();
   public chartTitle: Map<string, ApexTitleSubtitle> = new Map<string, ApexTitleSubtitle>();
+  public chartNames: Array<string> = [];
 
   series: ApexAxisChartSeries = [
     {
@@ -68,21 +70,28 @@ export class DashBoardComponent implements OnInit {
 
 
   constructor(public heartbeatService: HeartbeatService) {
-    this.heartbeatService.getData().subscribe(data => {
-      this._dateGroup = data;
-    });
-  }
-
-  public refresh() {
     this.chartData = new Map<string, number[]>();
     this.chartLabels = new Map<string, string[]>();
     this.chartTitle = new Map<string, ApexTitleSubtitle>();
+    timer(0, 60000).pipe(
+      map(() => {
+        this.refresh()
+      })
+    ).subscribe();
+  }
+
+  public refresh() {
+    console.log("refresh");
     this.heartbeatService.getData().subscribe(data => {
       this._dateGroup = data;
+      this.chartNames.forEach(type => {
+        this.setData(data, type);
+      })
     });
   }
 
   setData(data: DataHandler, type: string) {
+    console.log("setData -> {}", type);
     let dataSet = data.getDataSet(type, "timeSpentMillis");
     this.chartLabels.set(type, []);
     this.chartData.set(type, []);
@@ -92,13 +101,12 @@ export class DashBoardComponent implements OnInit {
     });
     for (let dataSetItem of dataSet) {
       let label = dataSetItem.label;
-      if (label === "null") {
-        label = "Default";
+      if (label !== "null") {
+        // @ts-ignore
+        this.chartLabels.get(type).push(label + " (" + DataConverter.format(dataSetItem.value) + ")");
+        // @ts-ignore
+        this.chartData.get(type).push(dataSetItem.value);
       }
-      // @ts-ignore
-      this.chartLabels.get(type).push(label + " (" + DataConverter.format(dataSetItem.value) + ")");
-      // @ts-ignore
-      this.chartData.get(type).push(dataSetItem.value);
     }
   }
 
@@ -126,9 +134,11 @@ export class DashBoardComponent implements OnInit {
 
   getData(type: string): number[] {
     let numbers = this.chartData.get(type);
+    if (!this.chartNames.includes(type)) {
+      this.chartNames.push(type);
+    }
     if (numbers === undefined) {
       if (this._dateGroup !== undefined) {
-        this.setData(this._dateGroup, type);
         return this.getData(type);
       }
       return this.pieSeries;

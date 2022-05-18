@@ -12,8 +12,6 @@ export class HeartbeatService {
   // Base url
   baseurl = 'https://backend.csctracker.com';
   token = localStorage.getItem('token');
-  private dataArray: Heartbeat[] = [];
-  private _dateGroup: DataHandler | undefined;
 
   constructor(private http: HttpClient) {
   }
@@ -88,12 +86,12 @@ export class HeartbeatService {
     return new Observable((observer) => {
       this.getHeartbeats().subscribe(
         (heartbeats) => {
+          let dataArray:Heartbeat[] = [];
           for (let groupedDataKey in heartbeats) {
             let heartbeat = heartbeats[groupedDataKey];
-            this.dataArray.push(heartbeat);
+            dataArray.push(heartbeat);
           }
-          this._dateGroup = new DataHandler(this.dataArray);
-          observer.next(this._dateGroup);
+          observer.next(new DataHandler(dataArray));
           observer.complete();
         }
       );

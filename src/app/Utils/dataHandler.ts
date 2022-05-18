@@ -40,7 +40,6 @@ export class DataHandler {
         heartbeat.groupedSums = new Map();
       }
       heartbeat.groupedSums.set(numericKey, sumByKey);
-      console.log("heartbeats -> ", groupedDataKey, sumByKey, heartbeat.groupedSums);
     }
     let keySomed = this._keySomeds.get(key);
     keySomed === undefined ? this._keySomeds.set(key, [numericKey]) : keySomed.push(numericKey);
