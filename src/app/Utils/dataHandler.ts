@@ -2,6 +2,7 @@ import {Heartbeat} from "../shared/heartbeat";
 import {DataSet} from "../shared/dataSet";
 import {TimeLinePoint} from "../shared/timeLinePoint";
 import {ApexAxisChartSeries} from "ng-apexcharts";
+import {Observable} from "rxjs";
 
 export class DataHandler {
   private _data: Heartbeat[];
@@ -45,30 +46,51 @@ export class DataHandler {
     keySomed === undefined ? this._keySomeds.set(key, [numericKey]) : keySomed.push(numericKey);
   }
 
-  public series(key): ApexAxisChartSeries {
-    let series: ApexAxisChartSeries | undefined = this._keyTimeLines.get(key);
-    if (series === undefined) {
-      series = [];
-      let dataSet = this._datasets.get(key);
-      if (dataSet === undefined) {
-        dataSet = this.groupByKey(key);
-      }
-      let timeLinePoints: TimeLinePoint[] = [];
-      for (let groupedDataKey in dataSet) {
-        let groupedData = dataSet[groupedDataKey];
-        for (let heartbeat of groupedData) {
-          let heartbeatElement = new Date(heartbeat['dateTime']);
-          let heartbeatElement1 = new Date(heartbeat['dateTimeEnd']);
-          let timeLinePoint = new TimeLinePoint(groupedDataKey, [heartbeatElement.getTime(), heartbeatElement1.getTime()]);
-          timeLinePoints.push(timeLinePoint);
+  // public getData(): Observable<DataHandler> {
+  //   return new Observable((observer) => {
+  //     this.getHeartbeats().subscribe(
+  //       (heartbeats) => {
+  //         let dataArray: Heartbeat[] = [];
+  //         for (let groupedDataKey in heartbeats) {
+  //           let heartbeat = heartbeats[groupedDataKey];
+  //           dataArray.push(heartbeat);
+  //         }
+  //         observer.next(new DataHandler(dataArray));
+  //         observer.complete();
+  //       }
+  //     );
+  //   });
+  // }
+
+  // public series(key): ApexAxisChartSeries {
+  public series(key): Observable<ApexAxisChartSeries> {
+    return new Observable((observer) => {
+      let series: ApexAxisChartSeries | undefined = this._keyTimeLines.get(key);
+      if (series === undefined) {
+        series = [];
+        let dataSet = this._datasets.get(key);
+        if (dataSet === undefined) {
+          dataSet = this.groupByKey(key);
         }
+        let timeLinePoints: TimeLinePoint[] = [];
+        for (let groupedDataKey in dataSet) {
+          let groupedData = dataSet[groupedDataKey];
+          for (let heartbeat of groupedData) {
+            let timeIni = new Date(heartbeat['dateTime']);
+            let timeEnd = new Date(heartbeat['dateTimeEnd']);
+            let timeLinePoint = new TimeLinePoint(groupedDataKey, [timeIni.getTime(), timeEnd.getTime()]);
+            timeLinePoints.push(timeLinePoint);
+          }
+        }
+        series = [{data: timeLinePoints}];
+        this._keyTimeLines.set(key, series);
+        observer.next(series);
+        observer.complete();
+      } else {
+        observer.next(series);
       }
-      series = [{data: timeLinePoints}];
-      this._keyTimeLines.set(key, series);
-      return series;
-    } else {
-      return series;
-    }
+
+    });
   }
 
   sumBy(dataSet, numericKey): number {

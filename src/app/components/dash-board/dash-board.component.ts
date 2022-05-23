@@ -4,7 +4,16 @@ import {DataHandler} from "../../Utils/dataHandler";
 import {DataConverter} from "../../Utils/dataConverter";
 
 
-import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexTheme, ApexXAxis} from "ng-apexcharts";
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexLegend,
+  ApexNoData,
+  ApexPlotOptions,
+  ApexTheme,
+  ApexTooltip,
+  ApexXAxis
+} from "ng-apexcharts";
 import {ApexTitleSubtitle} from "ng-apexcharts/lib/model/apex-types";
 import {map, timer} from "rxjs";
 
@@ -20,6 +29,7 @@ export class DashBoardComponent implements OnInit {
   public chartLabels: Map<string, string[]> = new Map<string, string[]>();
   public chartData: Map<string, number[]> = new Map<string, number[]>();
   public chartTitle: Map<string, ApexTitleSubtitle> = new Map<string, ApexTitleSubtitle>();
+  public chartSeries: Map<string, ApexAxisChartSeries> = new Map<string, ApexAxisChartSeries>();
   public chartNames: Array<string> = [];
 
   series: ApexAxisChartSeries = [
@@ -31,7 +41,7 @@ export class DashBoardComponent implements OnInit {
   pieSeries: number[] = [];
   pieLabels: string[] = [];
   pieChartTitle: ApexTitleSubtitle = {
-    text: 'test',
+    text: 'Loading',
     align: 'center'
   }
 
@@ -39,19 +49,39 @@ export class DashBoardComponent implements OnInit {
     mode: 'light'
   }
 
+  noData: ApexNoData = {
+    text: undefined,
+    align: 'center',
+    verticalAlign: 'middle',
+    offsetX: 0,
+    offsetY: 0,
+    style: {
+      color: undefined,
+      fontSize: '14px',
+      fontFamily: undefined
+    }
+  }
+
   chart: ApexChart = {
-    height: 350,
-    type: "rangeBar"
+    height: 450,
+    type: "rangeBar",
+    animations: {
+      enabled: true,
+      easing: "linear"
+    }
   };
   chartPie: ApexChart = {
-    type: "pie"
-  }
+    type: "donut"
+  };
+  tooltip: ApexTooltip = {
+    y: {
+      formatter: function (value) {
+        return DataConverter.format(value);
+      }
+    }
+  };
   responsive = [{
-    breakpoint: 480,
     options: {
-      chart: {
-        width: 200
-      },
       legend: {
         position: "bottom"
       }
@@ -61,6 +91,31 @@ export class DashBoardComponent implements OnInit {
   plotOptions: ApexPlotOptions = {
     bar: {
       horizontal: true
+    },
+    pie: {
+      donut: {
+        labels: {
+          show: true,
+          total: {
+            show: true,
+            formatter: function (w) {
+              let reduce = w.globals.seriesTotals.reduce((a, b) => {
+                return a + b
+              }, 0);
+              return DataConverter.format(reduce);
+            }
+          },
+          value: {
+            formatter(val: string): string {
+              try {
+                return DataConverter.format(Number.parseFloat(val));
+              } catch (e) {
+                return val;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -68,11 +123,22 @@ export class DashBoardComponent implements OnInit {
     type: "datetime"
   }
 
+  legend: ApexLegend = {
+    show: true,
+    position: 'bottom',
+    horizontalAlign: 'left',
+    height: 100,
+    formatter(legendName: string, opts?: any): string {
+      return legendName + ' (' + DataConverter.format(opts.w.globals.initialSeries[opts.seriesIndex]) + ')';
+    }
+  }
+
 
   constructor(public heartbeatService: HeartbeatService) {
     this.chartData = new Map<string, number[]>();
     this.chartLabels = new Map<string, string[]>();
     this.chartTitle = new Map<string, ApexTitleSubtitle>();
+    this.chartSeries = new Map<string, ApexAxisChartSeries>();
     timer(0, 60000).pipe(
       map(() => {
         this.refresh()
@@ -99,11 +165,12 @@ export class DashBoardComponent implements OnInit {
       text: type,
       align: 'center'
     });
+    this.chartSeries = new Map<string, ApexAxisChartSeries>();
     for (let dataSetItem of dataSet) {
       let label = dataSetItem.label;
       if (label !== "null") {
         // @ts-ignore
-        this.chartLabels.get(type).push(label + " (" + DataConverter.format(dataSetItem.value) + ")");
+        this.chartLabels.get(type).push(label);
         // @ts-ignore
         this.chartData.get(type).push(dataSetItem.value);
       }
@@ -117,11 +184,17 @@ export class DashBoardComponent implements OnInit {
   }
 
   getSeries(key: string): ApexAxisChartSeries {
-    if (this._dateGroup !== undefined) {
-      return this._dateGroup.series(key);
-    } else {
-      return this.series;
+    let serie = this.chartSeries.get(key);
+    if (serie !== undefined) {
+      return serie;
     }
+    if (this._dateGroup !== undefined) {
+      this._dateGroup.series(key).subscribe(data => {
+        console.log("getSeries -> {}", key);
+        this.chartSeries.set(key,data);
+      })
+    }
+    return this.series;
   }
 
   getLabels(type: string): string[] {

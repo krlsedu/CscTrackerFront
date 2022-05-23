@@ -8,7 +8,9 @@
         [series]="getSeries('hostName')"
         [chart]="chart"
         [plotOptions]="plotOptions"
-        [xaxis]="xaxis"></apx-chart>
+        [xaxis]="xaxis"
+        [legend]="legend"
+        [noData]="noData"></apx-chart>
     </div>
     <div class="row d-flex justify-content-around align-items-center">
       <div class="col-sm">
@@ -18,7 +20,11 @@
           [series]="getData('applicationName')"
           [chart]="chartPie"
           [labels]="getLabels('applicationName')"
-          [responsive]="responsive"></apx-chart>
+          [responsive]="responsive"
+          [legend]="legend"
+          [noData]="noData"
+          [plotOptions]="plotOptions"
+          [tooltip]="tooltip"></apx-chart>
       </div>
 
       <div class="col-sm">
@@ -28,7 +34,11 @@
           [series]="getData('project')"
           [chart]="chartPie"
           [labels]="getLabels('project')"
-          [responsive]="responsive"></apx-chart>
+          [responsive]="responsive"
+          [legend]="legend"
+          [noData]="noData"
+          [plotOptions]="plotOptions"
+          [tooltip]="tooltip"></apx-chart>
       </div>
     </div>
     <div class="row d-flex justify-content-around align-items-center">
@@ -39,7 +49,11 @@
           [series]="getData('language')"
           [chart]="chartPie"
           [labels]="getLabels('language')"
-          [responsive]="responsive"></apx-chart>
+          [responsive]="responsive"
+          [legend]="legend"
+          [noData]="noData"
+          [plotOptions]="plotOptions"
+          [tooltip]="tooltip"></apx-chart>
       </div>
 
       <div class="col-sm">
@@ -49,7 +63,11 @@
           [series]="getData('category')"
           [chart]="chartPie"
           [labels]="getLabels('category')"
-          [responsive]="responsive"></apx-chart>
+          [responsive]="responsive"
+          [legend]="legend"
+          [noData]="noData"
+          [plotOptions]="plotOptions"
+          [tooltip]="tooltip"></apx-chart>
       </div>
     </div>
     <div class="row d-flex justify-content-around align-items-center">
@@ -60,7 +78,11 @@
           [series]="getData('osName')"
           [chart]="chartPie"
           [labels]="getLabels('osName')"
-          [responsive]="responsive"></apx-chart>
+          [responsive]="responsive"
+          [legend]="legend"
+          [noData]="noData"
+          [plotOptions]="plotOptions"
+          [tooltip]="tooltip"></apx-chart>
       </div>
 
       <div class="col-sm">
@@ -70,16 +92,20 @@
           [series]="getData('hostName')"
           [chart]="chartPie"
           [labels]="getLabels('hostName')"
-          [responsive]="responsive"></apx-chart>
+          [responsive]="responsive"
+          [legend]="legend"
+          [noData]="noData"
+          [plotOptions]="plotOptions"
+          [tooltip]="tooltip"></apx-chart>
       </div>
     </div>
-<!--    <div class="row d-flex justify-content-around align-items-center">-->
-<!--      <apx-chart-->
-<!--        [title]="getTitle('applicationName')"-->
-<!--        [theme]="chartTheme"-->
-<!--        [series]="getSeries('applicationName')"-->
-<!--        [chart]="chart"-->
-<!--        [plotOptions]="plotOptions"-->
-<!--        [xaxis]="xaxis"></apx-chart>-->
-<!--    </div>-->
+    <!--    <div class="row d-flex justify-content-around align-items-center">-->
+    <!--      <apx-chart-->
+    <!--        [title]="getTitle('applicationName')"-->
+    <!--        [theme]="chartTheme"-->
+    <!--        [series]="getSeries('applicationName')"-->
+    <!--        [chart]="chart"-->
+    <!--        [plotOptions]="plotOptions"-->
+    <!--        [xaxis]="xaxis"></apx-chart>-->
+    <!--    </div>-->
   </div>
