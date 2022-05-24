@@ -26,11 +26,14 @@ export class DashBoardComponent implements OnInit {
 
   private _dateGroup: DataHandler | undefined;
 
+  public chartNames: Array<string> = [];
   public chartLabels: Map<string, string[]> = new Map<string, string[]>();
   public chartData: Map<string, number[]> = new Map<string, number[]>();
   public chartTitle: Map<string, ApexTitleSubtitle> = new Map<string, ApexTitleSubtitle>();
+
+  public chartNamesSeries: Array<string> = [];
   public chartSeries: Map<string, ApexAxisChartSeries> = new Map<string, ApexAxisChartSeries>();
-  public chartNames: Array<string> = [];
+  public chartTitleSeries: Map<string, ApexTitleSubtitle> = new Map<string, ApexTitleSubtitle>();
 
   series: ApexAxisChartSeries = [
     {
@@ -68,7 +71,8 @@ export class DashBoardComponent implements OnInit {
     animations: {
       enabled: true,
       easing: "linear"
-    }
+    },
+    id: "chart-1"
   };
   chartPie: ApexChart = {
     type: "donut"
@@ -139,11 +143,27 @@ export class DashBoardComponent implements OnInit {
     this.chartLabels = new Map<string, string[]>();
     this.chartTitle = new Map<string, ApexTitleSubtitle>();
     this.chartSeries = new Map<string, ApexAxisChartSeries>();
-    timer(0, 60000).pipe(
+    timer(0, 20000).pipe(
       map(() => {
         this.refresh()
       })
     ).subscribe();
+    timer(0, 120000).pipe(
+      map(() => {
+        this.refreshSeries()
+      })
+    ).subscribe();
+  }
+
+  public refreshSeries() {
+    console.log("refreshSereis");
+    this.chartSeries = new Map<string, ApexAxisChartSeries>();
+    this.chartNamesSeries.forEach(type => {
+      this.chartTitleSeries.set(type, {
+        text: type,
+        align: 'center'
+      });
+    })
   }
 
   public refresh() {
@@ -165,7 +185,6 @@ export class DashBoardComponent implements OnInit {
       text: type,
       align: 'center'
     });
-    this.chartSeries = new Map<string, ApexAxisChartSeries>();
     for (let dataSetItem of dataSet) {
       let label = dataSetItem.label;
       if (label !== "null") {
@@ -184,6 +203,9 @@ export class DashBoardComponent implements OnInit {
   }
 
   getSeries(key: string): ApexAxisChartSeries {
+    if (!this.chartNamesSeries.includes(key)) {
+      this.chartNamesSeries.push(key);
+    }
     let serie = this.chartSeries.get(key);
     if (serie !== undefined) {
       return serie;
@@ -217,6 +239,14 @@ export class DashBoardComponent implements OnInit {
       return this.pieSeries;
     }
     return numbers;
+  }
+
+  getTitleSeries(type: string): ApexTitleSubtitle {
+    let title = this.chartTitleSeries.get(type);
+    if (title === undefined) {
+      return this.pieChartTitle;
+    }
+    return title;
   }
 
   getTitle(type: string): ApexTitleSubtitle {
