@@ -70,6 +70,36 @@
           [tooltip]="tooltip"></apx-chart>
       </div>
     </div>
+
+    <div class="row d-flex justify-content-around align-items-center">
+      <div class="col-sm">
+        <apx-chart
+          [title]="getTitle('domain')"
+          [theme]="chartTheme"
+          [series]="getData('domain')"
+          [chart]="chartPie"
+          [labels]="getLabels('domain')"
+          [responsive]="responsive"
+          [legend]="legend"
+          [noData]="noData"
+          [plotOptions]="plotOptions"
+          [tooltip]="tooltip"></apx-chart>
+      </div>
+
+      <div class="col-sm">
+        <apx-chart
+          [title]="getTitle('entity')"
+          [theme]="chartTheme"
+          [series]="getData('entity')"
+          [chart]="chartPie"
+          [labels]="getLabels('entity')"
+          [responsive]="responsive"
+          [legend]="legend"
+          [noData]="noData"
+          [plotOptions]="plotOptions"
+          [tooltip]="tooltip"></apx-chart>
+      </div>
+    </div>
     <div class="row d-flex justify-content-around align-items-center">
       <div class="col-sm">
         <apx-chart

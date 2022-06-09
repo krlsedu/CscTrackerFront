@@ -46,6 +46,12 @@ export class HeartbeatService {
       .pipe(retry(1), catchError(this.errorHandl));
   }
 
+  getHeartbeatsPeriod(period: String): Observable<Heartbeat> {
+    return this.http
+      .get<Heartbeat>(this.baseurl + '/heartbeats?period=' + period, this.httpOptions)
+      .pipe(retry(1), catchError(this.errorHandl));
+  }
+
   // PUT
   // UpdateBug(id, data): Observable<Heartbeat> {
   //   return this.http
@@ -86,7 +92,7 @@ export class HeartbeatService {
     return new Observable((observer) => {
       this.getHeartbeats().subscribe(
         (heartbeats) => {
-          let dataArray:Heartbeat[] = [];
+          let dataArray: Heartbeat[] = [];
           for (let groupedDataKey in heartbeats) {
             let heartbeat = heartbeats[groupedDataKey];
             dataArray.push(heartbeat);
