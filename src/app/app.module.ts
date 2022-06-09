@@ -12,6 +12,8 @@ import {HeartbeatService} from './service/heartbeat.service';
 
 import {NgApexchartsModule} from "ng-apexcharts";
 import {GanttComponent} from './components/gantt/gantt.component';
+import {SeriesService} from "./service/series.service";
+import {DataSetService} from "./service/data-set.service";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import {GanttComponent} from './components/gantt/gantt.component';
     HttpClientModule,
     NgApexchartsModule
   ],
-  providers: [HeartbeatService],
+  providers: [HeartbeatService, SeriesService, DataSetService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

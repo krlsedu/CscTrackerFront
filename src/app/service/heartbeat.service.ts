@@ -4,13 +4,15 @@ import {Heartbeat} from '../shared/heartbeat';
 import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
 import {DataHandler} from "../Utils/dataHandler";
+import {TimeLinePoint} from "../shared/timeLinePoint";
+import {DataSet} from "../shared/dataSet";
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeartbeatService {
   // Base url
-  baseurl = 'https://backend.csctracker.com';
+  baseurl = 'http://127.0.0.1:8089';
   token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) {
@@ -49,6 +51,18 @@ export class HeartbeatService {
   getHeartbeatsPeriod(period: String): Observable<Heartbeat> {
     return this.http
       .get<Heartbeat>(this.baseurl + '/heartbeats?period=' + period, this.httpOptions)
+      .pipe(retry(1), catchError(this.errorHandl));
+  }
+
+  getTimelinePointsPeriod(period: String, metric: String): Observable<TimeLinePoint> {
+    return this.http
+      .get<TimeLinePoint>(this.baseurl + '/series?period=' + period + '&metric=' + metric, this.httpOptions)
+      .pipe(retry(1), catchError(this.errorHandl));
+  }
+
+  getDataSets(period: String, metric: String): Observable<DataSet> {
+    return this.http
+      .get<DataSet>(this.baseurl + '/datasets?period=' + period + '&metric=' + metric, this.httpOptions)
       .pipe(retry(1), catchError(this.errorHandl));
   }
 

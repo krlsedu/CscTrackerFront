@@ -16,6 +16,7 @@ import {
 } from "ng-apexcharts";
 import {ApexTitleSubtitle} from "ng-apexcharts/lib/model/apex-types";
 import {map, timer} from "rxjs";
+import {SeriesService} from "../../service/series.service";
 
 @Component({
   selector: 'app-dash-board',
@@ -138,7 +139,7 @@ export class DashBoardComponent implements OnInit {
   }
 
 
-  constructor(public heartbeatService: HeartbeatService) {
+  constructor(public heartbeatService: HeartbeatService, public seriesService: SeriesService) {
     this.chartData = new Map<string, number[]>();
     this.chartLabels = new Map<string, string[]>();
     this.chartTitle = new Map<string, ApexTitleSubtitle>();
@@ -156,7 +157,7 @@ export class DashBoardComponent implements OnInit {
   }
 
   public refreshSeries() {
-    console.log("refreshSereis");
+    console.log("refreshSeries");
     this.chartSeries = new Map<string, ApexAxisChartSeries>();
     this.chartNamesSeries.forEach(type => {
       this.chartTitleSeries.set(type, {
@@ -210,12 +211,10 @@ export class DashBoardComponent implements OnInit {
     if (serie !== undefined) {
       return serie;
     }
-    if (this._dateGroup !== undefined) {
-      this._dateGroup.series(key).subscribe(data => {
-        console.log("getSeries -> {}", key);
-        this.chartSeries.set(key,data);
-      })
-    }
+    this.seriesService.series(key).subscribe(data => {
+      console.log("getSeries -> {}", key);
+      this.chartSeries.set(key, data);
+    })
     return this.series;
   }
 
