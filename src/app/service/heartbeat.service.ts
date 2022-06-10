@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Heartbeat} from '../shared/heartbeat';
 import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
-import {DataHandler} from "../Utils/dataHandler";
 import {TimeLinePoint} from "../shared/timeLinePoint";
 import {DataSet} from "../shared/dataSet";
 
@@ -101,21 +100,4 @@ export class HeartbeatService {
       return errorMessage;
     });
   }
-
-  public getData(): Observable<DataHandler> {
-    return new Observable((observer) => {
-      this.getHeartbeats().subscribe(
-        (heartbeats) => {
-          let dataArray: Heartbeat[] = [];
-          for (let groupedDataKey in heartbeats) {
-            let heartbeat = heartbeats[groupedDataKey];
-            dataArray.push(heartbeat);
-          }
-          observer.next(new DataHandler(dataArray));
-          observer.complete();
-        }
-      );
-    });
-  }
-
 }
