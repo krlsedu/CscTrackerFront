@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {HeartbeatService} from "../../service/heartbeat.service";
-import {DataHandler} from "../../Utils/dataHandler";
 import {DataConverter} from "../../Utils/dataConverter";
 
 
@@ -17,6 +16,7 @@ import {
 import {ApexTitleSubtitle} from "ng-apexcharts/lib/model/apex-types";
 import {map, timer} from "rxjs";
 import {SeriesService} from "../../service/series.service";
+import {DataSetService} from "../../service/data-set.service";
 
 @Component({
   selector: 'app-dash-board',
@@ -24,9 +24,6 @@ import {SeriesService} from "../../service/series.service";
   styleUrls: ['./dash-board.component.css']
 })
 export class DashBoardComponent implements OnInit {
-
-  private _dateGroup: DataHandler | undefined;
-
   public chartNames: Array<string> = [];
   public chartLabels: Map<string, string[]> = new Map<string, string[]>();
   public chartData: Map<string, number[]> = new Map<string, number[]>();
@@ -35,6 +32,24 @@ export class DashBoardComponent implements OnInit {
   public chartNamesSeries: Array<string> = [];
   public chartSeries: Map<string, ApexAxisChartSeries> = new Map<string, ApexAxisChartSeries>();
   public chartTitleSeries: Map<string, ApexTitleSubtitle> = new Map<string, ApexTitleSubtitle>();
+
+
+  constructor(public heartbeatService: HeartbeatService, public seriesService: SeriesService, public dataSetService: DataSetService) {
+    this.chartData = new Map<string, number[]>();
+    this.chartLabels = new Map<string, string[]>();
+    this.chartTitle = new Map<string, ApexTitleSubtitle>();
+    this.chartSeries = new Map<string, ApexAxisChartSeries>();
+    timer(0, 20000).pipe(
+      map(() => {
+        this.refresh()
+      })
+    ).subscribe();
+    timer(0, 120000).pipe(
+      map(() => {
+        this.refreshSeries()
+      })
+    ).subscribe();
+  }
 
   series: ApexAxisChartSeries = [
     {
@@ -138,24 +153,6 @@ export class DashBoardComponent implements OnInit {
     }
   }
 
-
-  constructor(public heartbeatService: HeartbeatService, public seriesService: SeriesService) {
-    this.chartData = new Map<string, number[]>();
-    this.chartLabels = new Map<string, string[]>();
-    this.chartTitle = new Map<string, ApexTitleSubtitle>();
-    this.chartSeries = new Map<string, ApexAxisChartSeries>();
-    timer(0, 20000).pipe(
-      map(() => {
-        this.refresh()
-      })
-    ).subscribe();
-    timer(0, 120000).pipe(
-      map(() => {
-        this.refreshSeries()
-      })
-    ).subscribe();
-  }
-
   public refreshSeries() {
     console.log("refreshSeries");
     this.chartSeries = new Map<string, ApexAxisChartSeries>();
@@ -164,37 +161,42 @@ export class DashBoardComponent implements OnInit {
         text: type,
         align: 'center'
       });
+      this.setSeries(type);
     })
   }
 
+  setSeries(type: string) {
+    this.seriesService.series(type).subscribe(data => {
+      console.log("getSeries -> {}", type);
+      this.chartSeries.set(type, data);
+    })
+  }
   public refresh() {
     console.log("refresh");
-    this.heartbeatService.getData().subscribe(data => {
-      this._dateGroup = data;
-      this.chartNames.forEach(type => {
-        this.setData(data, type);
-      })
+    this.chartNames.forEach(type => {
+      this.setData(type);
     });
   }
 
-  setData(data: DataHandler, type: string) {
+  setData(type: string) {
     console.log("setData -> {}", type);
-    let dataSet = data.getDataSet(type, "timeSpentMillis");
-    this.chartLabels.set(type, []);
-    this.chartData.set(type, []);
-    this.chartTitle.set(type, {
-      text: type,
-      align: 'center'
-    });
-    for (let dataSetItem of dataSet) {
-      let label = dataSetItem.label;
-      if (label !== "null") {
-        // @ts-ignore
-        this.chartLabels.get(type).push(label);
-        // @ts-ignore
-        this.chartData.get(type).push(dataSetItem.value);
+    this.dataSetService.dataSets(type).subscribe(dataSet => {
+      this.chartLabels.set(type, []);
+      this.chartData.set(type, []);
+      this.chartTitle.set(type, {
+        text: type,
+        align: 'center'
+      });
+      for (let dataSetItem of dataSet) {
+        let label = dataSetItem.label;
+        if (label !== "null") {
+          // @ts-ignore
+          this.chartLabels.get(type).push(label);
+          // @ts-ignore
+          this.chartData.get(type).push(dataSetItem.value);
+        }
       }
-    }
+    });
   }
 
   ngOnInit() {
@@ -211,10 +213,6 @@ export class DashBoardComponent implements OnInit {
     if (serie !== undefined) {
       return serie;
     }
-    this.seriesService.series(key).subscribe(data => {
-      console.log("getSeries -> {}", key);
-      this.chartSeries.set(key, data);
-    })
     return this.series;
   }
 
@@ -232,9 +230,6 @@ export class DashBoardComponent implements OnInit {
       this.chartNames.push(type);
     }
     if (numbers === undefined) {
-      if (this._dateGroup !== undefined) {
-        return this.getData(type);
-      }
       return this.pieSeries;
     }
     return numbers;

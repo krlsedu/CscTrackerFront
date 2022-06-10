@@ -11,10 +11,18 @@ export class DataSetService {
   constructor(public heartbeatService: HeartbeatService) {
   }
 
-  public dataSets(key): Observable<DataSet> {
+  public dataSets(key): Observable<DataSet[]> {
     return new Observable((observer) => {
       this.heartbeatService.getDataSets("today", key).subscribe(
-        (dataSets) => {
+        (datasets) => {
+          let dataSets: DataSet[] = [];
+          for (let groupedDataKey in datasets) {
+            let heartbeat = datasets[groupedDataKey];
+            dataSets.push(heartbeat);
+          }
+
+          dataSets.sort((a, b) => b.value - a.value);
+
           observer.next(dataSets);
           observer.complete();
         }

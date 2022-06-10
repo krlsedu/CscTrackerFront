@@ -62,7 +62,7 @@ export class HeartbeatService {
 
   getDataSets(period: String, metric: String): Observable<DataSet> {
     return this.http
-      .get<DataSet>(this.baseurl + '/datasets?period=' + period + '&metric=' + metric, this.httpOptions)
+      .get<DataSet>(this.baseurl + '/dataset?period=' + period + '&metric=' + metric, this.httpOptions)
       .pipe(retry(1), catchError(this.errorHandl));
   }
 

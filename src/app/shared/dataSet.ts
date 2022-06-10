@@ -1,7 +1,6 @@
 export class DataSet{
   private _label: string;
   private _value: number;
-  groupedSums: any;
 
   constructor(label: string, value: number) {
     this._label = label;
