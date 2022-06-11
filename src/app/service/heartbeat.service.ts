@@ -12,7 +12,7 @@ import {DataSet} from "../shared/dataSet";
 export class HeartbeatService {
   // Base url
   baseurl = 'https://backend.csctracker.com';
-  bffurl = 'https://backend.csctracker.com';
+  bffurl = 'https://bff.csctracker.com';
   token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) {
