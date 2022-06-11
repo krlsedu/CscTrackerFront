@@ -12,6 +12,7 @@ import {DataSet} from "../shared/dataSet";
 export class HeartbeatService {
   // Base url
   baseurl = 'https://backend.csctracker.com';
+  bffurl = 'https://backend.csctracker.com';
   token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) {
@@ -55,7 +56,7 @@ export class HeartbeatService {
 
   getTimelinePointsPeriod(period: String, metric: String): Observable<TimeLinePoint> {
     return this.http
-      .get<TimeLinePoint>(this.baseurl + '/series?period=' + period + '&metric=' + metric, this.httpOptions)
+      .get<TimeLinePoint>(this.bffurl + '/series?period=' + period + '&metric=' + metric, this.httpOptions)
       .pipe(retry(1), catchError(this.errorHandl));
   }
 
