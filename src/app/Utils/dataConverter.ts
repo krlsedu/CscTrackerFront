@@ -1,4 +1,5 @@
-export class DataConverter{
+export class DataConverter {
+
   public static format(value: number): string {
     let unit = "ms";
     if (value > 1000) {
@@ -29,6 +30,14 @@ export class DataConverter{
       value = value / 12;
       unit = "y";
     }
-    return value.toFixed(2) + " " + unit;
+    try {
+      return value.toFixed(2) + " " + unit;
+    } catch (e) {
+      let val:number = 0;
+      for (let i = 0; i < value['data'].length; i++) {
+        val += value['data'][i]
+      }
+      return DataConverter.format(val);
+    }
   }
 }

@@ -1,18 +1,10 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<!--<div id="chart">-->
-<!--  <apx-chart-->
-<!--    [series]="series"-->
-<!--    [chart]="chart"-->
-<!--    [plotOptions]="plotOptions"-->
-<!--    [xaxis]="xaxis"></apx-chart>-->
-<!--</div>-->
-
-
-
-<div>
+<div id="chart">
   <apx-chart
-    [series]="series"
-    [chart]="chart"
-    [labels]="labels"
-    ></apx-chart>
+    [series]="columnChartSeries"
+    [chart]="columnChart"
+    [plotOptions]="columnChartOptions"
+    [responsive]="columnChartResponsive"
+    [xaxis]="columnCategory"
+    [legend]="legendColumnChart"
+    [fill]="fill"></apx-chart>
 </div>

@@ -5,6 +5,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
 import {TimeLinePoint} from "../shared/timeLinePoint";
 import {DataSet} from "../shared/dataSet";
+import {BarDataSet} from "../shared/barDataSet";
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +64,13 @@ export class HeartbeatService {
   getDataSets(period: String, metric: String): Observable<DataSet> {
     return this.http
       .get<DataSet>(this.bffurl + '/dataset?period=' + period + '&metric=' + metric, this.httpOptions)
+      .pipe(retry(1), catchError(this.errorHandl));
+  }
+
+  getBarDataSets(period: String, metric: String): Observable<BarDataSet> {
+    return this.http
+      .get<BarDataSet>(this.bffurl + '/bar-dataset?period=' + period + '&metric=' + metric, this.httpOptions)
+      // .get<BarDataSet>('http://localhost:5000/bar-dataset?period=' + period + '&metric=' + metric, this.httpOptions)
       .pipe(retry(1), catchError(this.errorHandl));
   }
 

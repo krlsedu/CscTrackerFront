@@ -13,6 +13,18 @@
         [noData]="noData"></apx-chart>
     </div>
     <div class="row d-flex justify-content-around align-items-center">
+      <apx-chart
+        [series]="getColumnSeries('hostName')"
+        [chart]="columnChart"
+        [plotOptions]="columnChartOptions"
+        [responsive]="columnChartResponsive"
+        [xaxis]="getColumnCategories('hostName')"
+        [legend]="legend"
+        [yaxis]="yAxys"
+        [dataLabels]="columnDataLabel"
+        [fill]="fill"></apx-chart>
+    </div>
+    <div class="row d-flex justify-content-around align-items-center">
       <div class="col-sm">
         <apx-chart
           [title]="getTitle('applicationName')"
@@ -129,16 +141,16 @@
           [tooltip]="tooltip"></apx-chart>
       </div>
     </div>
-<!--    <div class="row d-flex justify-content-around align-items-center">-->
-<!--      <apx-chart-->
-<!--        [title]="getTitleSeries('applicationName')"-->
-<!--        [theme]="chartTheme"-->
-<!--        [series]="getSeries('applicationName')"-->
-<!--        [chart]="chart"-->
-<!--        [plotOptions]="plotOptions"-->
-<!--        [xaxis]="xaxis"-->
-<!--        [legend]="legend"-->
-<!--        [noData]="noData"></apx-chart>-->
-<!--    </div>-->
+    <!--    <div class="row d-flex justify-content-around align-items-center">-->
+    <!--      <apx-chart-->
+    <!--        [title]="getTitleSeries('applicationName')"-->
+    <!--        [theme]="chartTheme"-->
+    <!--        [series]="getSeries('applicationName')"-->
+    <!--        [chart]="chart"-->
+    <!--        [plotOptions]="plotOptions"-->
+    <!--        [xaxis]="xaxis"-->
+    <!--        [legend]="legend"-->
+    <!--        [noData]="noData"></apx-chart>-->
+    <!--    </div>-->
   </div>
 </div>
