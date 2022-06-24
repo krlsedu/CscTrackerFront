@@ -81,7 +81,6 @@ export class PieChartService {
   }
 
   public refresh(chartId: string, periodService: PeriodService) {
-    console.log("Refresh " + chartId);
     this.setDataPie(chartId, periodService);
   }
 

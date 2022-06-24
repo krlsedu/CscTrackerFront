@@ -50,7 +50,6 @@ export class SeriesService {
   }
 
   public refresh(chartId: string, periodService: PeriodService) {
-    console.log("refreshSeries");
     this.setSeries(chartId, periodService);
   }
 
@@ -80,7 +79,6 @@ export class SeriesService {
     let metric = periodService.getMetric(chartId);
     let period = periodService.getPeriod(chartId);
     this.httpGetSeries(metric, period).subscribe(data => {
-      console.log("getSeries -> {}", metric);
       this.chartSeries.set(chartId, data);
     })
   }

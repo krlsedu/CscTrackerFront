@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 // @ts-ignore
 import {Subscription} from "rxjs/src/internal/Subscription";
 import {map, timer} from "rxjs";
+import {Line} from "../shared/line";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class PeriodService {
   public selectedPeriod: string[] = [];
   public selectedFrequency: number[] = [];
   public selectedMetric: string[] = [];
+
+  public registredBoxes: Array<string> = [];
+  public registredPieBoxes: Array<string> = [];
+  public lines: Line[] = [];
 
   public periods = [
     {id: 'today', name: 'Today'},
@@ -130,7 +135,7 @@ export class PeriodService {
     let frequency = this.getFrequency(boxId) * 1000;
     let timerBox = timer(0, frequency).pipe(
       map(() => {
-        service.refresh(boxId,this);
+        service.refresh(boxId, this);
       })
     ).subscribe();
     this.boxesSubscription.set(boxId, timerBox);
@@ -153,11 +158,31 @@ export class PeriodService {
     this.services.set(type, service);
   }
 
-  public registerBox(boxId: string, defaultMetric: string = 'hostName', defaultType: string = 'pie', defaultPeriod: string = 'today', defaultFrequency: number = 60) {
-    this.boxesTypeValue.set(boxId, defaultType);
-    this.getMetricIndex(boxId, defaultMetric);
-    this.getPeriodIndex(boxId, defaultPeriod);
-    this.getFrequencyIndex(boxId, defaultFrequency);
+  public registerBox(metric: string = 'hostName', type: string = 'pie', period: string = 'today', frequency: number = 60) {
+    let boxId;
+    if (type === 'pie') {
+      boxId = type + '-' + (this.registredPieBoxes.length + 1);
+    }else {
+      boxId = type + '-' + (this.registredBoxes.length + 1);
+    }
+    this.boxesTypeValue.set(boxId, type);
+    this.getMetricIndex(boxId, metric);
+    this.getPeriodIndex(boxId, period);
+    this.getFrequencyIndex(boxId, frequency);
     this.registerBoxRefresh(boxId);
+    if (type === 'pie') {
+      if (this.registredPieBoxes.length % 2 === 0) {
+        let boxIdSecond = type + '-' + (this.registredPieBoxes.length + 2);
+        this.lines.push(new Line(type,boxId, boxIdSecond));
+      }
+      this.registredPieBoxes.push(boxId);
+    }else {
+      this.lines.push(new Line(type,boxId));
+    }
+    this.registredBoxes.push(boxId);
+  }
+
+  public visible(boxId: string): boolean {
+    return this.registredBoxes.indexOf(boxId) !== -1;
   }
 }

@@ -19,16 +19,17 @@ export class DashBoardComponent implements OnInit {
     periodService.registerServices('pie', pieChartService);
     periodService.registerServices('series', seriesService);
     periodService.registerServices('column', columnService);
-    periodService.registerBox('series-1', 'hostName', 'series', 'today', 120)
-    periodService.registerBox('column-1', 'hostName', 'column', 'week', 120)
-    periodService.registerBox('pie-1', 'applicationName')
-    periodService.registerBox('pie-2', 'project')
-    periodService.registerBox('pie-3', 'language')
-    periodService.registerBox('pie-4', 'category')
-    periodService.registerBox('pie-5', 'domain')
-    periodService.registerBox('pie-6', 'entity')
-    periodService.registerBox('pie-7', 'osName')
-    periodService.registerBox('pie-8', 'hostName')
+    periodService.registerBox( 'hostName', 'series', 'today', 120)
+    periodService.registerBox('hostName', 'column', 'week', 120)
+    periodService.registerBox('applicationName')
+    periodService.registerBox('project')
+    periodService.registerBox('language')
+    periodService.registerBox('category')
+    periodService.registerBox('domain')
+    periodService.registerBox('entity')
+    periodService.registerBox('osName')
+    periodService.registerBox('project', 'column', 'week', 120)
+    periodService.registerBox('hostName')
   }
 
   ngOnInit() {
@@ -72,5 +73,4 @@ export class DashBoardComponent implements OnInit {
         this.columnService.setColumns(boxId, this.periodService);
     }
   }
-
 }

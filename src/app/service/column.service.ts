@@ -106,7 +106,6 @@ export class ColumnService {
   }
 
   public refresh(chartId: string, periodService: PeriodService) {
-    console.log("refresh -> {}", chartId);
     this.chartColumnSeries = new Map<string, ApexAxisChartSeries>();
     this.chartColumnCategory = new Map<string, ApexXAxis>();
     this.setColumns(chartId, periodService);
@@ -121,9 +120,8 @@ export class ColumnService {
     let period = periodService.getPeriod(chartId);
 
     this.barDataSets(metric, period).subscribe(data => {
-      console.log("getBarDataset -> {}", metric);
-      var series: ApexAxisChartSeries = []
-      var categories: ApexXAxis = {}
+      let series: ApexAxisChartSeries = []
+      let categories: ApexXAxis = {}
       categories.categories = []
       categories.type = "category"
       for (let serie in data.series) {
