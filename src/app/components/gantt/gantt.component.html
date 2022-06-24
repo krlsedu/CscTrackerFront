@@ -1,10 +1,9 @@
-<div id="chart">
-  <apx-chart
-    [series]="columnChartSeries"
-    [chart]="columnChart"
-    [plotOptions]="columnChartOptions"
-    [responsive]="columnChartResponsive"
-    [xaxis]="columnCategory"
-    [legend]="legendColumnChart"
-    [fill]="fill"></apx-chart>
+<div class="form-group">
+  <ng-select [items]="periodService.periods"
+             bindLabel="name"
+             bindValue="id"
+             [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('teste')]"
+             id="teste">
+  </ng-select>
 </div>
+

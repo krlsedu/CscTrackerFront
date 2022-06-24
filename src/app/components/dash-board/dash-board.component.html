@@ -1,144 +1,406 @@
 <div class="container">
 
   <div class="container">
-    <div class="row d-flex justify-content-around align-items-center">
+    <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
+      <div class="row d-flex justify-content-around align-items-center">
+        <div class="w-25 p-1">
+          <ng-select [items]="periodService.metrics"
+                     bindLabel="name"
+                     bindValue="id"
+                     (ngModelChange)="changeMetricEvent('series-1', $event)"
+                     [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('series-1')]">
+          </ng-select>
+        </div>
+        <div class="w-25 p-1">
+          <ng-select [items]="periodService.periods"
+                     bindLabel="name"
+                     bindValue="id"
+                     (ngModelChange)="changePeriodEvent('series-1', $event)"
+                     [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('series-1')]">
+          </ng-select>
+        </div>
+        <div class="w-25 p-1">
+          <ng-select [items]="periodService.frequencies"
+                     bindLabel="name"
+                     bindValue="id"
+                     (ngModelChange)="changeFrequencyEvent('series-1', $event)"
+                     [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('series-1')]">
+          </ng-select>
+        </div>
+      </div>
       <apx-chart
-        [title]="getTitleSeries('hostName')"
-        [theme]="chartTheme"
-        [series]="getSeries('hostName')"
-        [chart]="chart"
-        [plotOptions]="plotOptions"
-        [xaxis]="xaxis"
-        [legend]="legend"
-        [noData]="noData"></apx-chart>
+        [title]="seriesService.getTitleSeries('series-1')"
+        [series]="seriesService.getSeries('series-1')"
+        [chart]="seriesService.chart"
+        [plotOptions]="seriesService.plotOptions"
+        [xaxis]="seriesService.xaxis"
+        [theme]="defaultChartService.chartTheme"
+        [legend]="defaultChartService.legend"
+        [noData]="defaultChartService.noData"></apx-chart>
     </div>
-    <div class="row d-flex justify-content-around align-items-center">
-      <apx-chart
-        [series]="getColumnSeries('hostName')"
-        [chart]="columnChart"
-        [plotOptions]="columnChartOptions"
-        [responsive]="columnChartResponsive"
-        [xaxis]="getColumnCategories('hostName')"
-        [legend]="legend"
-        [yaxis]="yAxys"
-        [dataLabels]="columnDataLabel"
-        [fill]="fill"></apx-chart>
-    </div>
-    <div class="row d-flex justify-content-around align-items-center">
-      <div class="col-sm">
+    <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
+      <div class="row d-flex justify-content-around align-items-center">
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('column-1', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('column-1')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('column-1', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('column-1')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('column-1', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('column-1')]">
+            </ng-select>
+          </div>
+        </div>
         <apx-chart
-          [title]="getTitle('applicationName')"
-          [theme]="chartTheme"
-          [series]="getData('applicationName')"
-          [chart]="chartPie"
-          [labels]="getLabels('applicationName')"
-          [responsive]="responsive"
-          [legend]="legend"
-          [noData]="noData"
-          [plotOptions]="plotOptions"
-          [tooltip]="tooltip"></apx-chart>
-      </div>
-
-      <div class="col-sm">
-        <apx-chart
-          [title]="getTitle('project')"
-          [theme]="chartTheme"
-          [series]="getData('project')"
-          [chart]="chartPie"
-          [labels]="getLabels('project')"
-          [responsive]="responsive"
-          [legend]="legend"
-          [noData]="noData"
-          [plotOptions]="plotOptions"
-          [tooltip]="tooltip"></apx-chart>
-      </div>
-    </div>
-    <div class="row d-flex justify-content-around align-items-center">
-      <div class="col-sm">
-        <apx-chart
-          [title]="getTitle('language')"
-          [theme]="chartTheme"
-          [series]="getData('language')"
-          [chart]="chartPie"
-          [labels]="getLabels('language')"
-          [responsive]="responsive"
-          [legend]="legend"
-          [noData]="noData"
-          [plotOptions]="plotOptions"
-          [tooltip]="tooltip"></apx-chart>
-      </div>
-
-      <div class="col-sm">
-        <apx-chart
-          [title]="getTitle('category')"
-          [theme]="chartTheme"
-          [series]="getData('category')"
-          [chart]="chartPie"
-          [labels]="getLabels('category')"
-          [responsive]="responsive"
-          [legend]="legend"
-          [noData]="noData"
-          [plotOptions]="plotOptions"
-          [tooltip]="tooltip"></apx-chart>
+          [title]="columnService.getTitleColumn('column-1')"
+          [series]="columnService.getColumnSeries('column-1')"
+          [chart]="columnService.columnChart"
+          [plotOptions]="columnService.columnChartOptions"
+          [responsive]="columnService.columnChartResponsive"
+          [xaxis]="columnService.getColumnCategories('column-1')"
+          [yaxis]="columnService.yAxys"
+          [dataLabels]="columnService.columnDataLabel"
+          [fill]="columnService.fill"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
       </div>
     </div>
-
-    <div class="row d-flex justify-content-around align-items-center">
-      <div class="col-sm">
+    <div class="row d-flex justify-content-around align-items-center row-margin-05">
+      <div class="col-sm border rounded bg-light row-margin-05 col-margin-right-05">
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-50 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('pie-1', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('pie-1')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('pie-1', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('pie-1')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('pie-1', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('pie-1')]">
+            </ng-select>
+          </div>
+        </div>
         <apx-chart
-          [title]="getTitle('domain')"
-          [theme]="chartTheme"
-          [series]="getData('domain')"
-          [chart]="chartPie"
-          [labels]="getLabels('domain')"
-          [responsive]="responsive"
-          [legend]="legend"
-          [noData]="noData"
-          [plotOptions]="plotOptions"
-          [tooltip]="tooltip"></apx-chart>
+          [title]="pieChartService.getTitle('pie-1')"
+          [series]="pieChartService.getData('pie-1')"
+          [chart]="pieChartService.chartPie"
+          [labels]="pieChartService.getLabels('pie-1')"
+          [responsive]="pieChartService.responsive"
+          [plotOptions]="pieChartService.plotOptions"
+          [tooltip]="pieChartService.tooltip"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
       </div>
-
-      <div class="col-sm">
+      <div class="col-sm border rounded bg-light row-margin-05 col-margin-left-05">
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-50 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('pie-2', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('pie-2')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('pie-2', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('pie-2')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('pie-2', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('pie-2')]">
+            </ng-select>
+          </div>
+        </div>
         <apx-chart
-          [title]="getTitle('entity')"
-          [theme]="chartTheme"
-          [series]="getData('entity')"
-          [chart]="chartPie"
-          [labels]="getLabels('entity')"
-          [responsive]="responsive"
-          [legend]="legend"
-          [noData]="noData"
-          [plotOptions]="plotOptions"
-          [tooltip]="tooltip"></apx-chart>
+          [title]="pieChartService.getTitle('pie-2')"
+          [series]="pieChartService.getData('pie-2')"
+          [chart]="pieChartService.chartPie"
+          [labels]="pieChartService.getLabels('pie-2')"
+          [responsive]="pieChartService.responsive"
+          [plotOptions]="pieChartService.plotOptions"
+          [tooltip]="pieChartService.tooltip"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
       </div>
     </div>
-    <div class="row d-flex justify-content-around align-items-center">
-      <div class="col-sm">
+    <div class="row d-flex justify-content-around align-items-center row-margin-05">
+      <div class="col-sm border rounded bg-light row-margin-05 col-margin-right-05">
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-50 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('pie-3', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('pie-3')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('pie-3', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('pie-3')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('pie-3', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('pie-3')]">
+            </ng-select>
+          </div>
+        </div>
         <apx-chart
-          [title]="getTitle('osName')"
-          [theme]="chartTheme"
-          [series]="getData('osName')"
-          [chart]="chartPie"
-          [labels]="getLabels('osName')"
-          [responsive]="responsive"
-          [legend]="legend"
-          [noData]="noData"
-          [plotOptions]="plotOptions"
-          [tooltip]="tooltip"></apx-chart>
+          [title]="pieChartService.getTitle('pie-3')"
+          [series]="pieChartService.getData('pie-3')"
+          [chart]="pieChartService.chartPie"
+          [labels]="pieChartService.getLabels('pie-3')"
+          [responsive]="pieChartService.responsive"
+          [plotOptions]="pieChartService.plotOptions"
+          [tooltip]="pieChartService.tooltip"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
       </div>
+      <div class="col-sm border rounded bg-light row-margin-05 col-margin-left-05">
 
-      <div class="col-sm">
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-50 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('pie-4', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('pie-4')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('pie-4', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('pie-4')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('pie-4', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('pie-4')]">
+            </ng-select>
+          </div>
+        </div>
         <apx-chart
-          [title]="getTitle('hostName')"
-          [theme]="chartTheme"
-          [series]="getData('hostName')"
-          [chart]="chartPie"
-          [labels]="getLabels('hostName')"
-          [responsive]="responsive"
-          [legend]="legend"
-          [noData]="noData"
-          [plotOptions]="plotOptions"
-          [tooltip]="tooltip"></apx-chart>
+          [title]="pieChartService.getTitle('pie-4')"
+          [series]="pieChartService.getData('pie-4')"
+          [chart]="pieChartService.chartPie"
+          [labels]="pieChartService.getLabels('pie-4')"
+          [responsive]="pieChartService.responsive"
+          [plotOptions]="pieChartService.plotOptions"
+          [tooltip]="pieChartService.tooltip"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-around align-items-center row-margin-05">
+      <div class="col-sm border rounded bg-light row-margin-05 col-margin-right-05">
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-50 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('pie-5', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('pie-5')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('pie-5', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('pie-5')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('pie-5', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('pie-5')]">
+            </ng-select>
+          </div>
+        </div>
+        <apx-chart
+          [title]="pieChartService.getTitle('pie-5')"
+          [series]="pieChartService.getData('pie-5')"
+          [chart]="pieChartService.chartPie"
+          [labels]="pieChartService.getLabels('pie-5')"
+          [responsive]="pieChartService.responsive"
+          [plotOptions]="pieChartService.plotOptions"
+          [tooltip]="pieChartService.tooltip"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
+      </div>
+      <div class="col-sm border rounded bg-light row-margin-05 col-margin-left-05">
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-50 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('pie-6', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('pie-6')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('pie-6', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('pie-6')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('pie-6', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('pie-6')]">
+            </ng-select>
+          </div>
+        </div>
+        <apx-chart
+          [title]="pieChartService.getTitle('pie-6')"
+          [series]="pieChartService.getData('pie-6')"
+          [chart]="pieChartService.chartPie"
+          [labels]="pieChartService.getLabels('pie-6')"
+          [responsive]="pieChartService.responsive"
+          [plotOptions]="pieChartService.plotOptions"
+          [tooltip]="pieChartService.tooltip"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-around align-items-center row-margin-05">
+      <div class="col-sm border rounded bg-light row-margin-05 col-margin-right-05">
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-50 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('pie-7', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('pie-7')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('pie-7', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('pie-7')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('pie-7', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('pie-7')]">
+            </ng-select>
+          </div>
+        </div>
+        <apx-chart
+          [title]="pieChartService.getTitle('pie-7')"
+          [series]="pieChartService.getData('pie-7')"
+          [chart]="pieChartService.chartPie"
+          [labels]="pieChartService.getLabels('pie-7')"
+          [responsive]="pieChartService.responsive"
+          [plotOptions]="pieChartService.plotOptions"
+          [tooltip]="pieChartService.tooltip"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
+      </div>
+      <div class="col-sm border rounded bg-light row-margin-05 col-margin-left-05">
+
+        <div class="row d-flex justify-content-around align-items-center">
+          <div class="w-50 p-1">
+            <ng-select [items]="periodService.metrics"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeMetricEvent('pie-8', $event)"
+                       [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex('pie-8')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.periods"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changePeriodEvent('pie-8', $event)"
+                       [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex('pie-8')]">
+            </ng-select>
+          </div>
+          <div class="w-25 p-1">
+            <ng-select [items]="periodService.frequencies"
+                       bindLabel="name"
+                       bindValue="id"
+                       (ngModelChange)="changeFrequencyEvent('pie-8', $event)"
+                       [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex('pie-8')]">
+            </ng-select>
+          </div>
+        </div>
+        <apx-chart
+          [title]="pieChartService.getTitle('pie-8')"
+          [series]="pieChartService.getData('pie-8')"
+          [chart]="pieChartService.chartPie"
+          [labels]="pieChartService.getLabels('pie-8')"
+          [responsive]="pieChartService.responsive"
+          [plotOptions]="pieChartService.plotOptions"
+          [tooltip]="pieChartService.tooltip"
+          [theme]="defaultChartService.chartTheme"
+          [legend]="defaultChartService.legend"
+          [noData]="defaultChartService.noData"></apx-chart>
       </div>
     </div>
     <!--    <div class="row d-flex justify-content-around align-items-center">-->

@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {DataSetService} from './data-set.service';
+import {PieChartService} from './pie-chart.service';
 
-describe('DataSetService', () => {
-  let service: DataSetService;
+describe('PieChartService', () => {
+  let service: PieChartService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DataSetService);
+    service = TestBed.inject(PieChartService);
   });
 
   it('should be created', () => {

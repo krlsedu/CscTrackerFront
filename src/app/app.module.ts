@@ -13,7 +13,11 @@ import {HeartbeatService} from './service/heartbeat.service';
 import {NgApexchartsModule} from "ng-apexcharts";
 import {GanttComponent} from './components/gantt/gantt.component';
 import {SeriesService} from "./service/series.service";
-import {DataSetService} from "./service/data-set.service";
+
+import {NgbAlertModule, NgbDropdownModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+
+import {NgSelectModule} from '@ng-select/ng-select';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,13 +26,19 @@ import {DataSetService} from "./service/data-set.service";
     ListHeartbeatsComponent,
     GanttComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgApexchartsModule
-  ],
-  providers: [HeartbeatService, SeriesService, DataSetService],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        NgApexchartsModule,
+        NgbPaginationModule,
+        NgbAlertModule,
+        NgbDropdownModule,
+        NgSelectModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
+  providers: [HeartbeatService, SeriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
