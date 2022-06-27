@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HeartbeatService} from "./heartbeat.service";
 import {Observable} from "rxjs";
-import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexXAxis} from "ng-apexcharts";
+import {ApexAxisChartSeries, ApexChart, ApexPlotOptions, ApexTooltip, ApexXAxis} from "ng-apexcharts";
 import {TimeLinePoint} from "../shared/timeLinePoint";
-import {ApexTitleSubtitle} from "ng-apexcharts/lib/model/apex-types";
+import {ApexDataLabels, ApexTitleSubtitle} from "ng-apexcharts/lib/model/apex-types";
 import {PeriodService} from "./period.service";
 
 @Injectable({
@@ -43,6 +43,12 @@ export class SeriesService {
 
   xaxis: ApexXAxis = {
     type: "datetime"
+  }
+
+  tooltip: ApexTooltip = {
+  }
+
+  columnDataLabel: ApexDataLabels = {
   }
 
   constructor(public heartbeatService: HeartbeatService) {

@@ -10,6 +10,9 @@ import {LoginService} from "./service/login.service";
 })
 export class AppComponent {
   title = 'CscTracker';
+
+  sidebarExpanded = true;
+
   public login: boolean = false;
 
   private urlLogin = 'https://accounts.google.com/o/oauth2/auth?approval_prompt=force&scope=email&client_id=92132449986-f85cvq6rmtl8u7g24on48g562p98db8p.apps.googleusercontent.com&redirect_uri=https://csctracker.com&response_type=code&access_type=offline';

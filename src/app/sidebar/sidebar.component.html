@@ -1,0 +1,50 @@
+<div class="sidebar" [ngClass]="{ 'expanded': isExpanded }">
+  <div class="header">
+    <h1 class="title">
+      Menu
+    </h1>
+    <div class="toggle" (click)="handleSidebarToggle()">
+      <span class="chevron"></span>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="link">
+      <div class="content" [routerLink]="['/login']" [routerLinkActive]="'active'" (click)="doLogin()" *ngIf="login">
+        <div class="icon">
+          <fa-icon [icon]="faLogin"></fa-icon>
+        </div>
+        <div class="title">Login</div>
+      </div>
+    </div>
+    <div class="link">
+      <div class="content" [routerLink]="['/']" [routerLinkActive]="'active'">
+        <div class="icon">
+          <fa-icon [icon]="faHome"></fa-icon>
+        </div>
+        <div class="title">Home</div>
+      </div>
+    </div>
+    <div class="link with-children">
+      <div class="content" [routerLink]="['/dashboard']" [routerLinkActive]="'active'">
+        <div class="icon">
+          <fa-icon [icon]="faDashboard"></fa-icon>
+        </div>
+        <div class="title">Dashboard</div>
+      </div>
+      <div class="children">
+        <div class="link">
+          <div class="content" [routerLink]="['/gantt']"
+            [routerLinkActive]="'active'">
+            <div class="icon">
+              <fa-icon [icon]="faTest"></fa-icon>
+            </div>
+            <div class="title">Tests</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+  </div>
+</div>

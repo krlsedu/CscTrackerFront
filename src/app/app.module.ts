@@ -15,29 +15,33 @@ import {GanttComponent} from './components/gantt/gantt.component';
 import {SeriesService} from "./service/series.service";
 
 import {NgbAlertModule, NgbDropdownModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {SidebarComponent} from './sidebar/sidebar.component';
 
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashBoardComponent,
     ListHeartbeatsComponent,
-    GanttComponent
+    GanttComponent,
+    SidebarComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        NgApexchartsModule,
-        NgbPaginationModule,
-        NgbAlertModule,
-        NgbDropdownModule,
-        NgSelectModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgApexchartsModule,
+    NgbPaginationModule,
+    NgbAlertModule,
+    NgbDropdownModule,
+    NgSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FontAwesomeModule
+  ],
   providers: [HeartbeatService, SeriesService],
   bootstrap: [AppComponent]
 })
