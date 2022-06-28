@@ -23,11 +23,28 @@ export class PeriodService {
   public selectedFrequency: number[] = [];
   public selectedMetric: string[] = [];
 
+  public periodAdd: string = "today";
+  public frequencyAdd: number = 60;
+  public metricAdd: string = "hostName";
+  public typeAdd: string = "series";
+
   public registredBoxes: Array<string> = [];
+  public removedBoxes: Array<string> = [];
   public registredPieBoxes: Array<string> = [];
   public lines: Line[] = [];
 
   public periods = [
+    {id: '1m', name: 'Last 1 minute'},
+    {id: '5m', name: 'Last 5 minutes'},
+    {id: '10m', name: 'Last 10 minutes'},
+    {id: '15m', name: 'Last 15 minutes'},
+    {id: '30m', name: 'Last 30 minutes'},
+    {id: '1h', name: 'Last 1 hour'},
+    {id: '2h', name: 'Last 2 hours'},
+    {id: '3h', name: 'Last 3 hours'},
+    {id: '6h', name: 'Last 6 hours'},
+    {id: '12h', name: 'Last 12 hours'},
+    {id: '24h', name: 'Last 24 hours'},
     {id: 'today', name: 'Today'},
     {id: 'yesterday', name: 'Yesterday'},
     {id: 'week', name: 'Week'},
@@ -54,6 +71,12 @@ export class PeriodService {
     {id: 'entity', name: 'Entity'},
     {id: 'osName', name: 'OS Name'},
     {id: 'ideName', name: 'IDE Name'},
+  ];
+
+  public types = [
+    {id: 'series', name: 'Time Line Chart'},
+    {id: 'column', name: 'Bar Chart'},
+    {id: 'pie', name: 'Donut Chart'},
   ];
 
   public getPeriod(boxId: string): string {
@@ -148,6 +171,11 @@ export class PeriodService {
     }
   }
 
+  public removeBox(boxId) {
+    this.unregisterBoxRefresh(boxId);
+    this.removedBoxes.push(boxId);
+  }
+
   public unregisterAllBoxRefresh() {
     for (const subscription of this.boxesSubscription.values()) {
       subscription.unsubscribe();
@@ -168,10 +196,15 @@ export class PeriodService {
     this.registredBoxes = [];
     this.registredPieBoxes = [];
     this.lines = [];
+    this.removedBoxes = [];
   }
 
   public registerServices(type: string, service) {
     this.services.set(type, service);
+  }
+
+  public addBox(){
+    this.registerBox(this.metricAdd, this.typeAdd, this.periodAdd, this.frequencyAdd);
   }
 
   public registerBox(metric: string = 'hostName', type: string = 'pie', period: string = 'today', frequency: number = 60) {
@@ -199,6 +232,6 @@ export class PeriodService {
   }
 
   public visible(boxId: string): boolean {
-    return this.registredBoxes.indexOf(boxId) !== -1;
+    return this.registredBoxes.indexOf(boxId) !== -1 && this.removedBoxes.indexOf(boxId) === -1;
   }
 }

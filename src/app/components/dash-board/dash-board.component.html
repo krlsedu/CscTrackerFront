@@ -1,9 +1,57 @@
 <div class="container">
   <div class="container">
+    <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
+      <div class="row d-flex justify-content-around align-items-center">
+        <div class="w-25 p-1">
+          <div>
+            Chart type
+          </div>
+          <ng-select [items]="periodService.types"
+                     bindLabel="name"
+                     bindValue="id"
+                     [(ngModel)]="periodService.typeAdd">
+          </ng-select>
+        </div>
+        <div class="w-25 p-1">
+          <div>
+            Metric
+          </div>
+          <ng-select [items]="periodService.metrics"
+                     bindLabel="name"
+                     bindValue="id"
+                     [(ngModel)]="periodService.metricAdd">
+          </ng-select>
+        </div>
+        <div class="w-25 p-1">
+          <div>
+            Period
+          </div>
+          <ng-select [items]="periodService.periods"
+                     bindLabel="name"
+                     bindValue="id"
+                     [(ngModel)]="periodService.periodAdd">
+          </ng-select>
+        </div>
+        <div class="w-auto p-1">
+          <div>
+            Refresh rate
+          </div>
+          <ng-select [items]="periodService.frequencies"
+                     bindLabel="name"
+                     bindValue="id"
+                     [(ngModel)]="periodService.frequencyAdd">
+          </ng-select>
+        </div>
+        <div class="w-auto p-1">
+          <button class="btn btn-primary" (click)="periodService.addBox()">Add</button>
+        </div>
+      </div>
+    </div>
     <div *ngFor="let div of periodService.lines" id="div{{div}}">
       <div [ngSwitch]="div.type">
         <div *ngSwitchCase="'series'">
-          <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
+          <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05"
+               *ngIf="periodService.visible(div.boxId)">
             <div class="row d-flex justify-content-around align-items-center">
               <div class="w-25 p-1">
                 <ng-select [items]="periodService.metrics"
@@ -29,6 +77,9 @@
                            [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex(div.boxId)]">
                 </ng-select>
               </div>
+              <div class="w-auto p-1">
+                <button class="btn btn-close" (click)="periodService.removeBox(div.boxId)"></button>
+              </div>
             </div>
             <apx-chart
               [title]="seriesService.getTitleSeries(div.boxId)"
@@ -44,7 +95,8 @@
           </div>
         </div>
         <div *ngSwitchCase="'column'">
-          <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
+          <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05"
+               *ngIf="periodService.visible(div.boxId)">
             <div class="row d-flex justify-content-around align-items-center">
               <div class="row d-flex justify-content-around align-items-center">
                 <div class="w-25 p-1">
@@ -71,6 +123,9 @@
                              [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex(div.boxId)]">
                   </ng-select>
                 </div>
+                <div class="w-auto p-1">
+                  <button class="btn btn-close" (click)="periodService.removeBox(div.boxId)"></button>
+                </div>
               </div>
               <apx-chart
                 [title]="columnService.getTitleColumn(div.boxId)"
@@ -93,7 +148,7 @@
             <div class="col-sm border rounded bg-light row-margin-05 col-margin-right-05"
                  *ngIf="periodService.visible(div.boxId)">
               <div class="row d-flex justify-content-around align-items-center">
-                <div class="w-50 p-1">
+                <div class="w-auto p-1">
                   <ng-select [items]="periodService.metrics"
                              bindLabel="name"
                              bindValue="id"
@@ -101,7 +156,7 @@
                              [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex(div.boxId)]">
                   </ng-select>
                 </div>
-                <div class="w-25 p-1">
+                <div class="w-auto p-1">
                   <ng-select [items]="periodService.periods"
                              bindLabel="name"
                              bindValue="id"
@@ -109,13 +164,16 @@
                              [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex(div.boxId)]">
                   </ng-select>
                 </div>
-                <div class="w-25 p-1">
+                <div class="w-auto p-1">
                   <ng-select [items]="periodService.frequencies"
                              bindLabel="name"
                              bindValue="id"
                              (ngModelChange)="changeFrequencyEvent(div.boxId, $event)"
                              [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex(div.boxId)]">
                   </ng-select>
+                </div>
+                <div class="w-auto p-1">
+                  <button class="btn btn-close" (click)="periodService.removeBox(div.boxId)"></button>
                 </div>
               </div>
               <apx-chart
@@ -133,7 +191,7 @@
             <div class="col-sm border rounded bg-light row-margin-05 col-margin-left-05"
                  *ngIf="periodService.visible(div.boxIdSecond)">
               <div class="row d-flex justify-content-around align-items-center">
-                <div class="w-50 p-1">
+                <div class="w-auto p-1">
                   <ng-select [items]="periodService.metrics"
                              bindLabel="name"
                              bindValue="id"
@@ -141,7 +199,7 @@
                              [(ngModel)]="periodService.selectedMetric[periodService.getMetricIndex(div.boxIdSecond)]">
                   </ng-select>
                 </div>
-                <div class="w-25 p-1">
+                <div class="w-auto p-1">
                   <ng-select [items]="periodService.periods"
                              bindLabel="name"
                              bindValue="id"
@@ -149,13 +207,16 @@
                              [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex(div.boxIdSecond)]">
                   </ng-select>
                 </div>
-                <div class="w-25 p-1">
+                <div class="w-auto p-1">
                   <ng-select [items]="periodService.frequencies"
                              bindLabel="name"
                              bindValue="id"
                              (ngModelChange)="changeFrequencyEvent(div.boxIdSecond, $event)"
                              [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex(div.boxIdSecond)]">
                   </ng-select>
+                </div>
+                <div class="w-auto p-1">
+                  <button class="btn btn-close" (click)="periodService.removeBox(div.boxIdSecond)"></button>
                 </div>
               </div>
               <apx-chart
