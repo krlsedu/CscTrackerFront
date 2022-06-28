@@ -23,11 +23,11 @@ export class DashBoardComponent implements OnInit {
     periodService.registerBox( 'hostName', 'series', 'today', 120)
     periodService.registerBox('hostName', 'column', 'week', 120)
     periodService.registerBox('applicationName')
+    periodService.registerBox('ideName')
     periodService.registerBox('project')
     periodService.registerBox('language')
     periodService.registerBox('category')
     periodService.registerBox('domain')
-    periodService.registerBox('entity')
     periodService.registerBox('osName')
     periodService.registerBox('hostName')
   }
