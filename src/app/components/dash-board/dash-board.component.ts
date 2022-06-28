@@ -16,6 +16,7 @@ export class DashBoardComponent implements OnInit {
               public periodService: PeriodService,
               public defaultChartService: DefaultChartService,
               public pieChartService: PieChartService) {
+    periodService.resetAllInfo();
     periodService.registerServices('pie', pieChartService);
     periodService.registerServices('series', seriesService);
     periodService.registerServices('column', columnService);

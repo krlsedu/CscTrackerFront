@@ -24,10 +24,10 @@
 
     .header {
       h1 {
-        margin-left: 0px;
+        margin-left: 0;
       }
       .chevron {
-        margin-left: 0px;
+        margin-left: 0;
         &::before {
           transform: rotate(-135deg);
         }
@@ -141,14 +141,14 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-right: 0px;
+          margin-right: 0;
         }
         .title {
           flex: 1;
           // display: none;
           color: #6d6e7e;
           transition: 0.3s;
-          max-width: 0px;
+          max-width: 0;
           overflow: hidden;
         }
       }

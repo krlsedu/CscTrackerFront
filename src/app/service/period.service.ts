@@ -154,6 +154,22 @@ export class PeriodService {
     }
   }
 
+  public resetAllInfo() {
+    this.unregisterAllBoxRefresh();
+    this.boxesPeriodValue = new Map<string, number>();
+    this.boxesFrequencyValue = new Map<string, number>();
+    this.boxesMetricValue = new Map<string, number>();
+    this.boxesTypeValue = new Map<string, string>();
+    this.boxesSubscription = new Map<string, Subscription>();
+    this.services = new Map<string, any>();
+    this.selectedPeriod = [];
+    this.selectedFrequency = [];
+    this.selectedMetric = [];
+    this.registredBoxes = [];
+    this.registredPieBoxes = [];
+    this.lines = [];
+  }
+
   public registerServices(type: string, service) {
     this.services.set(type, service);
   }
@@ -162,7 +178,7 @@ export class PeriodService {
     let boxId;
     if (type === 'pie') {
       boxId = type + '-' + (this.registredPieBoxes.length + 1);
-    }else {
+    } else {
       boxId = type + '-' + (this.registredBoxes.length + 1);
     }
     this.boxesTypeValue.set(boxId, type);
@@ -173,11 +189,11 @@ export class PeriodService {
     if (type === 'pie') {
       if (this.registredPieBoxes.length % 2 === 0) {
         let boxIdSecond = type + '-' + (this.registredPieBoxes.length + 2);
-        this.lines.push(new Line(type,boxId, boxIdSecond));
+        this.lines.push(new Line(type, boxId, boxIdSecond));
       }
       this.registredPieBoxes.push(boxId);
-    }else {
-      this.lines.push(new Line(type,boxId));
+    } else {
+      this.lines.push(new Line(type, boxId));
     }
     this.registredBoxes.push(boxId);
   }
