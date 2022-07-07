@@ -33,11 +33,15 @@ export class DataConverter {
     try {
       return value.toFixed(2) + " " + unit;
     } catch (e) {
-      let val:number = 0;
+      let val: number = 0;
       for (let i = 0; i < value['data'].length; i++) {
         val += value['data'][i]
       }
       return DataConverter.format(val);
     }
+  }
+
+  public static formatDate(date: Date): string {
+    return date.toLocaleString()
   }
 }

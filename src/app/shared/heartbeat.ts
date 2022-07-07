@@ -18,8 +18,10 @@ export class Heartbeat {
   private _dateTimeEnd: Date;
   private _sent: boolean;
   private _domain: string;
+  private _time: string;
+  private _formatedDate: string;
 
-  constructor(entity: string, process: string, applicationName: string, entityType: string, timestamp: number, write: boolean, project: string, language: string, category: string, ideName: string, ideVersion: string, hostName: string, osName: string, timeSpentMillis: number, timeSpentMillisNoConflict: number, dateTime: Date, dateTimeEnd: Date, sent: boolean, domain: string) {
+  constructor(entity: string, process: string, applicationName: string, entityType: string, timestamp: number, write: boolean, project: string, language: string, category: string, ideName: string, ideVersion: string, hostName: string, osName: string, timeSpentMillis: number, timeSpentMillisNoConflict: number, dateTime: Date, dateTimeEnd: Date, sent: boolean, domain: string, time: string, formatedDate: string) {
     this._entity = entity;
     this._process = process;
     this._applicationName = applicationName;
@@ -39,8 +41,9 @@ export class Heartbeat {
     this._dateTimeEnd = dateTimeEnd;
     this._sent = sent;
     this._domain = domain;
+    this._time = time;
+    this._formatedDate = formatedDate;
   }
-
 
   get entity(): string {
     return this._entity;
@@ -192,5 +195,21 @@ export class Heartbeat {
 
   set domain(value: string) {
     this._domain = value;
+  }
+
+  get time(): string {
+    return this._time;
+  }
+
+  set time(value: string) {
+    this._time = value;
+  }
+
+  get formatedDate(): string {
+    return this._formatedDate;
+  }
+
+  set formatedDate(value: string) {
+    this._formatedDate = value;
   }
 }

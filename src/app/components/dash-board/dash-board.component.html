@@ -233,6 +233,64 @@
             </div>
           </div>
         </div>
+        <div *ngSwitchCase="'list'">
+          <div class="row d-flex justify-content-around align-items-center row-margin-05">
+            <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05"
+                 *ngIf="periodService.visible(div.boxId)">
+
+              <div class="row d-flex justify-content-around align-items-center row-margin-05">
+                <div class="w-25 p-1">
+                  <ng-select [items]="periodService.periods"
+                             bindLabel="name"
+                             bindValue="id"
+                             (ngModelChange)="changePeriodEvent(div.boxId, $event)"
+                             [(ngModel)]="periodService.selectedPeriod[periodService.getPeriodIndex(div.boxId)]">
+                  </ng-select>
+                </div>
+                <div class="w-25 p-1">
+                  <ng-select [items]="periodService.frequencies"
+                             bindLabel="name"
+                             bindValue="id"
+                             (ngModelChange)="changeFrequencyEvent(div.boxId, $event)"
+                             [(ngModel)]="periodService.selectedFrequency[periodService.getFrequencyIndex(div.boxId)]">
+                  </ng-select>
+                </div>
+                <div class="w-auto p-1">
+                  <button class="btn btn-close" (click)="periodService.removeBox(div.boxId)"></button>
+                </div>
+              </div>
+              <div class="table-responsive-sm row-margin-05 tableFixHead">
+                <table class="table border rounded bg-white">
+                  <thead class="bg-white bg-opacity-100">
+                  <tr class="bg-white bg-opacity-100">
+                    <th scope="col">Application Name</th>
+                    <th scope="col">Host Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Time</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let heartbeat of listService.getList(div.boxId); index as i"
+                      class="border rounded bg-white bg-opacity-100 row-margin-05">
+                    <td>
+                      {{heartbeat.applicationName}}
+                    </td>
+                    <td>
+                      {{heartbeat.hostName}}
+                    </td>
+                    <td>
+                      {{heartbeat.category}}
+                    </td>
+                    <td>
+                      {{heartbeat.time}}
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
         <div *ngSwitchDefault>
           <h1>OPS</h1>
         </div>

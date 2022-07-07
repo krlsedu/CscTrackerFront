@@ -71,12 +71,15 @@ export class PeriodService {
     {id: 'entity', name: 'Entity'},
     {id: 'osName', name: 'OS Name'},
     {id: 'ideName', name: 'IDE Name'},
+    {id: 'heartbeat', name: 'Heartbeat'},
+    {id: 'transaction', name: 'Transaction'},
   ];
 
   public types = [
     {id: 'series', name: 'Time Line Chart'},
     {id: 'column', name: 'Bar Chart'},
     {id: 'pie', name: 'Donut Chart'},
+    {id: 'list', name: 'List Chart'},
   ];
 
   public getPeriod(boxId: string): string {
@@ -214,6 +217,7 @@ export class PeriodService {
     } else {
       boxId = type + '-' + (this.registredBoxes.length + 1);
     }
+    //todo: check if metric is valid to chart type
     this.boxesTypeValue.set(boxId, type);
     this.getMetricIndex(boxId, metric);
     this.getPeriodIndex(boxId, period);

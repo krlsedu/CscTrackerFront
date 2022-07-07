@@ -4,6 +4,7 @@ import {ColumnService} from "../../service/column.service";
 import {PeriodService} from "../../service/period.service";
 import {DefaultChartService} from "../../service/default-chart.service";
 import {PieChartService} from "../../service/pie-chart.service";
+import {ListService} from "../../service/list.service";
 
 @Component({
   selector: 'app-dash-board',
@@ -15,11 +16,13 @@ export class DashBoardComponent implements OnInit {
               public columnService: ColumnService,
               public periodService: PeriodService,
               public defaultChartService: DefaultChartService,
-              public pieChartService: PieChartService) {
+              public pieChartService: PieChartService,
+              public listService: ListService) {
     periodService.resetAllInfo();
     periodService.registerServices('pie', pieChartService);
     periodService.registerServices('series', seriesService);
     periodService.registerServices('column', columnService);
+    periodService.registerServices('list', listService);
     periodService.registerBox( 'hostName', 'series', 'today', 120)
     periodService.registerBox('hostName', 'column', 'week', 120)
     periodService.registerBox('applicationName')
@@ -30,6 +33,7 @@ export class DashBoardComponent implements OnInit {
     periodService.registerBox('domain')
     periodService.registerBox('osName')
     periodService.registerBox('hostName')
+    periodService.registerBox('heartbeat', 'list', '15m', 30)
   }
 
   ngOnInit() {
@@ -48,6 +52,10 @@ export class DashBoardComponent implements OnInit {
         break;
       case "column":
         this.columnService.setColumns(boxId, this.periodService);
+        break;
+      case "list":
+        this.listService.setList(boxId,this.periodService);
+        break;
     }
   }
 
@@ -71,6 +79,10 @@ export class DashBoardComponent implements OnInit {
         break;
       case "column":
         this.columnService.setColumns(boxId, this.periodService);
+        break;
+      case "list":
+        this.listService.setList(boxId,this.periodService)
+        break;
     }
   }
 }
