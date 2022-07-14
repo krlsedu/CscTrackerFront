@@ -46,6 +46,11 @@ export class SeriesService {
   }
 
   tooltip: ApexTooltip = {
+    enabled: true,
+    x: {
+      show: true,
+      format: 'HH:mm:ss'
+    }
   }
 
   columnDataLabel: ApexDataLabels = {
