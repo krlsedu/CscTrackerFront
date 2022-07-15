@@ -2,8 +2,8 @@
 .col-margin-left-05 { margin-left: 0.5em; }
 .col-margin-right-05 { margin-right: 0.5em; }
 
-.tableFixHead          { overflow: auto; height: 500px; }
-.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+.scrollDiv          { overflow: auto; height: 500px; }
+.scrollDiv thead th { position: sticky; top: 0; z-index: 1; }
 table  { border-collapse: collapse; width: 100%; }
 th, td { padding: 8px 16px; }
 th {  background:#eee; solid-color: #eeeeee }

@@ -32,8 +32,27 @@
     </div>
 
     <div class="row d-flex justify-content-around align-items-center border rounded row-margin-05">
-      <div class="tableFixHead">
+      <div class="scrollDiv">
         <div id="messages" class="d-grid gap-3 row-margin-notify">
+          <div *ngFor="let notification of notifications">
+            <div [ngSwitch]="notification.type">
+              <div *ngSwitchCase="'default'">
+                <div class="p-2 border rounded bg-light" >
+                  {{notification.text}}
+                </div>
+              </div>
+              <div *ngSwitchCase="'contact'">
+                <div class="p-2 border rounded bg-green" >
+                  {{notification.text}}
+                </div>
+              </div>
+              <div *ngSwitchCase="'app'">
+                <div class="p-2 border rounded bg-blue" >
+                  {{notification.text}}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

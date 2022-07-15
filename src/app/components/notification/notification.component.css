@@ -24,7 +24,7 @@
 }
 
 
-.tableFixHead {
+.scrollDiv {
   overflow: auto;
   height: 650px;
 }
