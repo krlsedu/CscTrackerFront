@@ -22,6 +22,10 @@ export class AppComponent {
               public loginService: LoginService) {
     this.activatedRoute.queryParams.subscribe(params => {
       let code = params['code'];
+      let token = params['token'];
+      if (token !== undefined) {
+        localStorage.setItem('token', token);
+      }
       console.log(code);
       if (code !== undefined) {
         this.loginService.get(code).subscribe(data => {

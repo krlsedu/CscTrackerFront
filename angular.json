@@ -36,10 +36,10 @@
             ],
             "scripts": [
               "node_modules/apexcharts/dist/apexcharts.min.js",
-              "src/app/components/notification/stomp.js",
-              "src/app/components/notification/index.js",
-              "src/app/components/notification/webSocketSendToUserApp.js",
-              "src/app/components/notification/sockjs-0.3.4.js"
+              "src/assets/stomp.js",
+              "src/assets/index.js",
+              "src/assets/webSocketSendToUserApp.js",
+              "src/assets/sockjs-0.3.4.js"
             ]
           },
           "configurations": {

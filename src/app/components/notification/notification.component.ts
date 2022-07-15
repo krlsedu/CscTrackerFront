@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {disconnect, init} from './index.js';
+import {disconnect, init} from '../../../assets';
 
 @Component({
   selector: 'app-notification',
