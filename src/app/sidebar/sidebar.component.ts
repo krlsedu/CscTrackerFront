@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Inject, Input, Output} from "@angular/core";
-import {faDashboard, faFlaskVial, faHome, faKey} from "@fortawesome/free-solid-svg-icons";
+import {faDashboard, faFlaskVial, faHome, faKey, faSync} from "@fortawesome/free-solid-svg-icons";
 import {DOCUMENT} from "@angular/common";
 
 @Component({
@@ -17,6 +17,7 @@ export class SidebarComponent {
   faHome = faHome;
   faDashboard = faDashboard;
   faTest = faFlaskVial;
+  faNotification = faSync;
   faLogin = faKey
   handleSidebarToggle = () => this.toggleSidebar.emit(!this.isExpanded);
   constructor(@Inject(DOCUMENT) private document: Document,) {

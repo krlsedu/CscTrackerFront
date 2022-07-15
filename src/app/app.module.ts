@@ -20,6 +20,7 @@ import {SidebarComponent} from './sidebar/sidebar.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NotificationComponent} from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     DashBoardComponent,
     ListHeartbeatsComponent,
     GanttComponent,
-    SidebarComponent
+    SidebarComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

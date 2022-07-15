@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="container">
+    <div class="row d-flex justify-content-around align-items-center row-margin-05">
+      <header>
+        <h1>Notificações</h1>
+      </header>
+      <ng-form>
+        <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
+          <div class="w-50 p-1">
+            <label class="col-form-label" for="text">Favorite contact:</label>
+            <input aria-describedby="basic-addon2" aria-label="Add an item" class="form-control" id="text"
+                   placeholder="Notificar quando?" type="text"/>
+          </div>
+          <div class="w-50 p-1">
+            <label class="col-form-label" for="app-notify">App to notify:</label>
+            <input aria-describedby="basic-addon2" aria-label="Add an item" class="form-control"
+                   id="app-notify"
+                   placeholder="Notificar quando?" type="text"/>
+          </div>
+        </div>
+
+        <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
+
+          <div class="w-auto p-1">
+            <button class="btn btn-primary" onclick="saveConfigs();" id="save">Save</button>
+            <button class="btn btn-primary" onclick="connect();" id="connect">Connect</button>
+            <button class="btn btn-primary" onclick="disconnect();" id="disconnect">Disconnect</button>
+          </div>
+        </div>
+      </ng-form>
+
+    </div>
+
+    <div class="row d-flex justify-content-around align-items-center border rounded row-margin-05">
+      <div class="tableFixHead">
+        <div id="messages" class="d-grid gap-3 row-margin-notify">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
