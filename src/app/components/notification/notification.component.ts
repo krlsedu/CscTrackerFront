@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Client} from '@stomp/stompjs';
 import {NotificationSync} from "../../shared/notificationSync";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
+import {Observable} from "rxjs";
 import {catchError, retry} from "rxjs/operators";
+import {CommonsService} from "../../service/commons.service";
 
 @Component({
   selector: 'app-notification',
@@ -13,26 +13,15 @@ import {catchError, retry} from "rxjs/operators";
 
 export class NotificationComponent implements OnInit, OnDestroy {
 
-  token = localStorage.getItem('token');
   notifications: Array<NotificationSync> = [];
-  baseurl = 'https://notify.csctracker.com';
-  config: any = {
-    'favoriteContact': 'Suelen Boff',
-    'favoriteApp': 'Calendar',
+
+  constructor(public commonsService: CommonsService) {
+    commonsService.init();
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.token
-    }),
-  };
-
-  constructor(private http: HttpClient) {
-    console.log(this.token);
-  }
 
   ngOnInit(): void {
+
     let client = new Client();
 
     client.configure({
@@ -50,6 +39,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
       }
     });
     client.activate();
+
+    if (Notification.permission !== 'granted')
+      Notification.requestPermission();
   }
 
   msgRecived(msg: string) {
@@ -66,17 +58,33 @@ export class NotificationComponent implements OnInit, OnDestroy {
         notification.type = 'default';
       }
       this.notifications.unshift(notification);
+      if (this.isNotify(data)) {
+        let notify = new Notification('Notification incoming from ' + data.app, {
+          icon: 'images/csctracker-desktop-plugin.png',
+          body: data.from + ": " + data.text + " (" + data.time + ")",
+        });
+        notify.onclick = function () {
+          window.focus();
+          this.close();
+        };
+      }
     });
   }
 
   isFavoriteContact(messageOutput) {
-    let text = this.config.favoriteContact;
+    let text = this.commonsService.config.favoriteContact;
     return ((!this.isEmpty(text) && messageOutput.from.includes(text)) || text === '*')
   }
 
   isFavoriteApp(messageOutput) {
-    let text = this.config.favoriteApp;
+    let text = this.commonsService.config.applicationNotify;
     return ((!this.isEmpty(text) && messageOutput.app === text) || text === '*')
+  }
+
+  saveConfigs() {
+    this.commonsService.saveConfig(this.commonsService.config).subscribe((data) => {
+      console.log(data);
+    });
   }
 
   isEmpty(str) {
@@ -87,28 +95,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   getNotification(id: String): Observable<NotificationSync> {
-    return this.http
-      .get<NotificationSync>(this.baseurl + '/message/' + id, this.httpOptions)
-      .pipe(retry(1), catchError(this.errorHandl));
+    return this.commonsService.http
+      .get<NotificationSync>(this.commonsService.baseurl + '/message/' + id, this.commonsService.httpOptions)
+      .pipe(retry(1), catchError(this.commonsService.errorHandl));
   }
 
-  errorHandl(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-
-    if (error.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/'
-    }
-
-    console.log(errorMessage);
-    return throwError(() => {
-      return errorMessage;
-    });
+  isNotify(messageOutput) {
+    return this.isFavoriteContact(messageOutput) || this.isFavoriteApp(messageOutput);
   }
-
 }

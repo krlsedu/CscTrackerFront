@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Inject, Input, Output} from "@angular/core";
 import {faDashboard, faFlaskVial, faHome, faKey, faSync} from "@fortawesome/free-solid-svg-icons";
 import {DOCUMENT} from "@angular/common";
+import {CommonsService} from "../service/commons.service";
 
 @Component({
   selector: "my-sidebar",
@@ -20,7 +21,7 @@ export class SidebarComponent {
   faNotification = faSync;
   faLogin = faKey
   handleSidebarToggle = () => this.toggleSidebar.emit(!this.isExpanded);
-  constructor(@Inject(DOCUMENT) private document: Document,) {
+  constructor(@Inject(DOCUMENT) private document: Document, public commonService: CommonsService) {
     let token = localStorage.getItem('token');
 
     this.login = (token === undefined || token === null);

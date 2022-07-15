@@ -1,6 +1,10 @@
 .row-margin-05 {
   margin-top: 0.5em;
 }
+.row-margin-all-05 {
+  margin: 0.5em;
+}
+
 
 .row-margin-notify {
   margin-top: 1em;

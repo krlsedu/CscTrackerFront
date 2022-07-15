@@ -29,16 +29,16 @@
         <div class="title">Dashboard</div>
       </div>
     </div>
-<!--    <div class="link">-->
-<!--      <div class="content" [routerLink]="['/notifications']"-->
-<!--           [routerLinkActive]="'active'">-->
-<!--        <div class="icon">-->
-<!--          <fa-icon [icon]="faNotification"></fa-icon>-->
-<!--        </div>-->
-<!--        <div class="title">Notifications</div>-->
-<!--      </div>-->
-<!--    </div>-->
-    <div class="link">
+    <div class="link" *ngIf="commonService.tester">
+      <div class="content" [routerLink]="['/notifications']"
+           [routerLinkActive]="'active'">
+        <div class="icon">
+          <fa-icon [icon]="faNotification"></fa-icon>
+        </div>
+        <div class="title">Notifications</div>
+      </div>
+    </div>
+    <div class="link" *ngIf="commonService.tester">
       <div class="content" [routerLink]="['/gantt']"
            [routerLinkActive]="'active'">
         <div class="icon">

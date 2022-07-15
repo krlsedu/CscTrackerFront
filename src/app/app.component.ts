@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {LoginService} from "./service/login.service";
+import {CommonsService} from "./service/commons.service";
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,9 @@ export class AppComponent {
 
   constructor(@Inject(DOCUMENT) private document: Document,
               public activatedRoute: ActivatedRoute,
-              public loginService: LoginService) {
+              public loginService: LoginService,
+              public commonsService: CommonsService) {
+    commonsService.init();
     this.activatedRoute.queryParams.subscribe(params => {
       let code = params['code'];
       let token = params['token'];

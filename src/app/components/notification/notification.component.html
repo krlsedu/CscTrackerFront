@@ -4,30 +4,34 @@
       <header>
         <h1>Notificações</h1>
       </header>
-      <ng-form>
+      <form #formConfigs>
         <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
-          <div class="w-50 p-1">
-            <label class="col-form-label" for="text">Favorite contact:</label>
-            <input aria-describedby="basic-addon2" aria-label="Add an item" class="form-control" id="text"
-                   placeholder="Notificar quando?" type="text"/>
+          <div class="row d-flex justify-content-around align-items-center row-margin-all-05">
+            <div class="w-50 p-1">
+              <label class="col-form-label" for="favoriteContact">Favorite contact:</label>
+              <input class="form-control"
+                     id="favoriteContact"
+                     placeholder="Notificar quando?" type="text"
+                     name="favoriteContact"
+                     [(ngModel)]="commonsService.config.favoriteContact"/>
+            </div>
+            <div class="w-50 p-1">
+              <label class="col-form-label" for="applicationNotify">App to notify:</label>
+              <input class="form-control"
+                     name="applicationNotify"
+                     id="applicationNotify"
+                     placeholder="Notificar quando?" type="text"
+                     [(ngModel)]="commonsService.config.applicationNotify"/>
+            </div>
           </div>
-          <div class="w-50 p-1">
-            <label class="col-form-label" for="app-notify">App to notify:</label>
-            <input aria-describedby="basic-addon2" aria-label="Add an item" class="form-control"
-                   id="app-notify"
-                   placeholder="Notificar quando?" type="text"/>
+          <div class="row d-flex justify-content-around align-items-center row-margin-all-05">
+
+            <div class="w-auto p-1">
+              <button class="btn btn-primary" id="save" (click)="saveConfigs()">Save</button>
+            </div>
           </div>
         </div>
-
-        <div class="row d-flex justify-content-around align-items-center border rounded bg-light row-margin-05">
-
-          <div class="w-auto p-1">
-            <button class="btn btn-primary" onclick="saveConfigs();" id="save">Save</button>
-            <button class="btn btn-primary" onclick="connect();" id="connect">Connect</button>
-            <button class="btn btn-primary" onclick="disconnect();" id="disconnect">Disconnect</button>
-          </div>
-        </div>
-      </ng-form>
+      </form>
 
     </div>
 
@@ -37,17 +41,17 @@
           <div *ngFor="let notification of notifications">
             <div [ngSwitch]="notification.type">
               <div *ngSwitchCase="'default'">
-                <div class="p-2 border rounded bg-light" >
+                <div class="p-2 border rounded bg-light">
                   {{notification.text}}
                 </div>
               </div>
               <div *ngSwitchCase="'contact'">
-                <div class="p-2 border rounded bg-green" >
+                <div class="p-2 border rounded bg-green">
                   {{notification.text}}
                 </div>
               </div>
               <div *ngSwitchCase="'app'">
-                <div class="p-2 border rounded bg-blue" >
+                <div class="p-2 border rounded bg-blue">
                   {{notification.text}}
                 </div>
               </div>

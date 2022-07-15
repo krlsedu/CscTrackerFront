@@ -23,7 +23,7 @@ export class DashBoardComponent implements OnInit {
     periodService.registerServices('series', seriesService);
     periodService.registerServices('column', columnService);
     periodService.registerServices('list', listService);
-    periodService.registerBox( 'hostName', 'series', 'today', 120)
+    periodService.registerBox('hostName', 'series', 'today', 120)
     periodService.registerBox('hostName', 'column', 'week', 120)
     periodService.registerBox('applicationName')
     periodService.registerBox('ideName')
@@ -34,6 +34,7 @@ export class DashBoardComponent implements OnInit {
     periodService.registerBox('osName')
     periodService.registerBox('hostName')
     periodService.registerBox('heartbeat', 'list', '15m', 30)
+    periodService.registerBox('entity', 'series', '10m', 10)
   }
 
   ngOnInit() {
